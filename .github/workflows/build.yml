@@ -30,35 +30,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Setup Node.js 22.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-
-      - name: Yarn install --immutable
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: install --immutable
-          dir: 'backstage'
-
-      - name: Yarn tsc
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: tsc
-          dir: 'backstage'
-
-      - name: Yarn build:backend
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: build:backend
-          dir: 'backstage'
-
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v6
         with:
           context: backstage
-          file: packages/backend/Dockerfile
+          file: backstage/Dockerfile-multistage
+          target: runtime
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |

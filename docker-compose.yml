@@ -5,6 +5,7 @@ services:
       context: backstage
 #      dockerfile: packages/backend/Dockerfile
       dockerfile: Dockerfile-multistage
+      target: runtime
     env_file:
       - .env
     environment:
