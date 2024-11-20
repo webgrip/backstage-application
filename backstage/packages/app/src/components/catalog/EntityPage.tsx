@@ -86,7 +86,8 @@ import {
 
 import {
     EntitySentryCard,
-    EntitySentryContent
+    EntitySentryContent,
+    isSentryAvailable,
 } from '@backstage-community/plugin-sentry';
 
 import {
@@ -166,9 +167,13 @@ const overviewContent = (
   <Grid container spacing={3} alignItems="stretch">
     {entityWarningContent}
 
-    <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-      <EntitySentryCard />
-    </Grid>
+      <EntitySwitch>
+          <EntitySwitch.Case if={isSentryAvailable}>
+            <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+              <EntitySentryCard />
+            </Grid>
+          </EntitySwitch.Case>
+      </EntitySwitch>
 
     <EntitySwitch>
       <EntitySwitch.Case if={isNewRelicDashboardAvailable}>
@@ -284,8 +289,8 @@ const serviceEntityPage = (
       <EntityGithubPullRequestsContent />
     </EntityLayout.Route>
 
-    <EntityLayout.Route path="/sentry" title="Sentry">
-      <EntitySentryContent />
+    <EntityLayout.Route path="/sentry" title="Sentry" if={isSentryAvailable}>
+        <EntitySentryContent />
     </EntityLayout.Route>
 
     <EntityLayout.Route
@@ -357,17 +362,17 @@ const websiteEntityPage = (
       </Grid>
     </EntityLayout.Route>
 
-    <EntityLayout.Route path="/sentry" title="Sentry">
+    <EntityLayout.Route path="/sentry" title="Sentry" if={isSentryAvailable}>
       <EntitySentryContent />
     </EntityLayout.Route>
 
-      <EntityLayout.Route
-          if={isNewRelicDashboardAvailable}
-          path="/newrelic-dashboard"
-          title="New Relic Dashboard"
-      >
-          <EntityNewRelicDashboardContent />
-      </EntityLayout.Route>
+    <EntityLayout.Route
+      if={isNewRelicDashboardAvailable}
+      path="/newrelic-dashboard"
+      title="New Relic Dashboard"
+    >
+      <EntityNewRelicDashboardContent />
+    </EntityLayout.Route>
 
     <EntityLayout.Route path="/api" title="API">
       <Grid container spacing={3} alignItems="stretch">
