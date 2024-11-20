@@ -8,6 +8,8 @@ on:
         description: 'DockerHub token'
         required: true
 
+name: Build
+
 jobs:
   build-docker-image-backstage-application:
     name: 'Build Backstage Application'

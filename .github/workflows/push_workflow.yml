@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+name: Push Workflow
 jobs:
   build:
     uses: ./.github/workflows/build.yml
