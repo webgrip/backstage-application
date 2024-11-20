@@ -53,12 +53,14 @@ backend.add(githubOrgModule);
 // See https://backstage.io/docs/features/software-catalog/configuration#subscribing-to-catalog-errors
 backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
 
+// See https://github.com/backstage/backstage/blob/master/plugins/catalog-backend-module-unprocessed/README.md
+backend.add(import('@backstage/plugin-catalog-backend-module-unprocessed'));
+
 // permission plugin
 backend.add(import('@backstage/plugin-permission-backend'));
 // See https://backstage.io/docs/permissions/getting-started for how to create your own permission policy
-backend.add(
-  import('@backstage/plugin-permission-backend-module-allow-all-policy'),
-);
+backend.add(import('./extensions/permissionsPolicyExtension'));
+
 
 // search plugin
 backend.add(import('@backstage/plugin-search-backend'));
@@ -73,5 +75,8 @@ backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 
 // kubernetes
 backend.add(import('@backstage/plugin-kubernetes-backend'));
+
+// devtools
+backend.add(import('@backstage/plugin-devtools-backend'));
 
 backend.start();

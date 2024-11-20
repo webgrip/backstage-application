@@ -1,7 +1,9 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: backstage
+  name: backstage-application
+  namespace: webgrip
+  title: Backstage Application
   description: |
     Backstage is an open-source developer portal that puts the developer experience first.
   labels:
@@ -35,8 +37,9 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
-  title: Backstage
   name: backstage-system
+  namespace: webgrip
+  title: Backstage
   description: |
     Backstage is an open-source developer portal that puts the developer experience first.
 spec:

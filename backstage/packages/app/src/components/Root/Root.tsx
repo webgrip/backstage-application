@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import BuildIcon from '@material-ui/icons/Build';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
@@ -30,6 +31,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
 import GroupIcon from '@material-ui/icons/People';
 import {useApp} from "@backstage/core-plugin-api";
+import {devToolsAdministerPermission} from "@backstage/plugin-devtools-common";
+import {RequirePermission} from "@backstage/plugin-permission-react";
 
 const useSidebarLogoStyles = makeStyles({
   root: {
@@ -133,6 +136,11 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         to="/settings"
       >
         <SidebarSettings />
+        <RequirePermission
+          permission={devToolsAdministerPermission}
+          errorPage={<></>}>
+            <SidebarItem icon={BuildIcon} to="devtools" text="DevTools" />
+        </RequirePermission>
       </SidebarGroup>
     </Sidebar>
     {children}

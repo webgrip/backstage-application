@@ -1,11 +1,10 @@
 services:
   backstage-application:
     container_name: backstage-application
-    image: webgrip/backstage-application:latest
-    pull_policy: always
     build:
       context: backstage
-      dockerfile: packages/backend/Dockerfile
+#      dockerfile: packages/backend/Dockerfile
+      dockerfile: Dockerfile-multistage
     env_file:
       - .env
     environment:

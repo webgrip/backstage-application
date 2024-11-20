@@ -15,8 +15,7 @@ backend:
   baseUrl: http://localhost:7007
   listen:
     port: 7007
-    # Uncomment the following host directive to bind to specific interfaces
-    # host: 127.0.0.1
+    host: 0.0.0.0
   csp:
     connect-src: ["'self'", 'http:', 'https:']
     img-src: ["'self'", 'data:', 'https://avatars.githubusercontent.com', 'https://img.shields.io']
@@ -46,10 +45,6 @@ integrations:
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
       token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
 
 proxy:
   endpoints:
@@ -59,11 +54,15 @@ proxy:
       headers:
         Authorization: Bearer ${SENTRY_TOKEN}
     '/newrelic/apm/api':
-      target: https://api.newrelic.com/v2
+      target: https://api.eu.newrelic.com/v2/
       headers:
         X-Api-Key: ${NEW_RELIC_REST_API_KEY}
       allowedHeaders:
         - link
+    '/newrelic/api':
+      target: https://api.eu.newrelic.com/
+      headers:
+        X-Api-Key: ${NEW_RELIC_USER_KEY}
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
@@ -143,3 +142,20 @@ kubernetes:
 permission:
   # setting this to `false` will disable permissions
   enabled: true
+
+devTools:
+  info:
+    packagePrefixes:
+      - '@roadiehq/'
+      - '@backstage-community/'
+      - '@spotify/'
+      - '@dweber019/backstage-plugin-simple-icons'
+      - '@opentelemetry/'
+  externalDependencies:
+    endpoints:
+      - name: 'Google'
+        type: 'fetch'
+        target: 'https://google.ca'
+      - name: 'Google Public DNS'
+        type: 'ping'
+        target: '8.8.8.8'

@@ -46,9 +46,17 @@ import { NewRelicPage } from '@backstage-community/plugin-newrelic';
 
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
 
+import { DevToolsPage } from '@backstage/plugin-devtools';
+import { customDevToolsPage } from './components/devtools/CustomDevToolsPage';
+import { devToolsInfoReadPermission } from "@backstage/plugin-devtools-common";
+import {CatalogUnprocessedEntitiesPage} from "@backstage/plugin-catalog-unprocessed-entities";
+
+import * as plugins from './plugins';
+
 const app = createApp({
   apis,
   icons: simpleIconsColor,
+  plugins: Object.values(plugins),
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
@@ -117,6 +125,16 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/newrelic" element={<NewRelicPage />} />
+    <Route path="/devtools"
+        element={
+            <RequirePermission permission={devToolsInfoReadPermission}>
+                <DevToolsPage />
+            </RequirePermission>
+        }
+    >
+        {customDevToolsPage}
+    </Route>plg
+    <Route path="/catalog-unprocessed-entities" element={<CatalogUnprocessedEntitiesPage />} />
   </FlatRoutes>
 );
 
