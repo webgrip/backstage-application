@@ -37,8 +37,18 @@ import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
+import {
+    // simpleIcons,
+    simpleIconsColor,
+} from '@dweber019/backstage-plugin-simple-icons';
+
+import { NewRelicPage } from '@backstage-community/plugin-newrelic';
+
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
+
 const app = createApp({
   apis,
+  icons: simpleIconsColor,
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
@@ -57,7 +67,18 @@ const app = createApp({
     });
   },
   components: {
-    SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
+      SignInPage: props => (
+          <SignInPage
+              {...props}
+              auto
+              provider={{
+                  id: 'github-auth-provider',
+                  title: 'GitHub',
+                  message: 'Sign in using GitHub',
+                  apiRef: githubAuthApiRef,
+              }}
+          />
+      ),
   },
 });
 
@@ -95,6 +116,7 @@ const routes = (
     </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
+    <Route path="/newrelic" element={<NewRelicPage />} />
   </FlatRoutes>
 );
 

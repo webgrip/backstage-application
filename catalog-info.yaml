@@ -1,0 +1,44 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage
+  description: |
+    Backstage is an open-source developer portal that puts the developer experience first.
+  labels:
+    tier: "2"
+  links:
+    - title: Website
+      url: http://backstage.io
+    - title: Documentation
+      url: https://backstage.io/docs
+    - title: Storybook
+      url: https://backstage.io/storybook
+    - title: Discord Chat
+      url: https://discord.com/invite/EBHEGzX
+    - title: Development URL
+      url: https://backstage.test
+      icon: dashboard
+  tags:
+    - backstage
+  annotations:
+    github.com/project-slug: webgrip/backstage
+    backstage.io/techdocs-ref: dir:.
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/name=backstage'
+    backstage.io/code-coverage: enabled
+    simpleicons.org/icon-slug: backstage
+spec:
+  type: service
+  owner: group:webgrip/backstage
+  lifecycle: experimental
+  system: backstage-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  title: Backstage
+  name: backstage-system
+  description: |
+    Backstage is an open-source developer portal that puts the developer experience first.
+spec:
+  owner: group:webgrip/backstage
+  domain: webgrip/operations-domain

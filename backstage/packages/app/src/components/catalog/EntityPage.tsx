@@ -26,7 +26,7 @@ import {
   hasCatalogProcessingErrors,
   isOrphan,
   hasRelationWarnings,
-  EntityRelationWarning,
+  EntityRelationWarning, EntityLabelsCard, hasLabels,
 } from '@backstage/plugin-catalog';
 import {
   EntityUserProfileCard,
@@ -58,6 +58,42 @@ import {
   EntityKubernetesContent,
   isKubernetesAvailable,
 } from '@backstage/plugin-kubernetes';
+
+import {
+    EntityGithubActionsContent,
+    EntityRecentGithubActionsRunsCard,
+    isGithubActionsAvailable,
+} from '@backstage-community/plugin-github-actions';
+
+import {
+    EntityGithubPullRequestsContent,
+    EntityGithubPullRequestsOverviewCard,
+    isGithubPullRequestsAvailable,
+    isGithubTeamPullRequestsAvailable,
+    EntityGithubGroupPullRequestsCard,
+} from '@roadiehq/backstage-plugin-github-pull-requests';
+
+import {
+    EntityGithubInsightsContent,
+    EntityGithubInsightsComplianceCard,
+    // EntityGithubInsightsContributorsCard,
+    EntityGithubInsightsLanguagesCard,
+    EntityGithubInsightsReadmeCard,
+    EntityGithubInsightsReleasesCard,
+    // EntityGithubInsightsEnvironmentsCard,
+    isGithubInsightsAvailable,
+} from '@roadiehq/backstage-plugin-github-insights';
+
+import {
+    EntitySentryCard,
+    EntitySentryContent
+} from '@backstage-community/plugin-sentry';
+
+import {
+    isNewRelicDashboardAvailable,
+    EntityNewRelicDashboardContent,
+    EntityNewRelicDashboardCard,
+} from '@backstage-community/plugin-newrelic-dashboard';
 
 const techdocsContent = (
   <EntityTechdocsContent>
@@ -95,6 +131,14 @@ const cicdContent = (
         }
       />
     </EntitySwitch.Case>
+    <EntitySwitch.Case if={isGithubActionsAvailable}>
+      <Grid item xs={12}>
+        <EntityRecentGithubActionsRunsCard limit={4} variant="gridItem"/>
+      </Grid>
+      <Grid item xs={12}>
+        <EntityGithubActionsContent/>
+      </Grid>
+    </EntitySwitch.Case>
   </EntitySwitch>
 );
 
@@ -129,19 +173,96 @@ const entityWarningContent = (
 const overviewContent = (
   <Grid container spacing={3} alignItems="stretch">
     {entityWarningContent}
-    <Grid item md={6}>
-      <EntityAboutCard variant="gridItem" />
-    </Grid>
-    <Grid item md={6} xs={12}>
-      <EntityCatalogGraphCard variant="gridItem" height={400} />
+
+    <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+      <EntitySentryCard />
     </Grid>
 
-    <Grid item md={4} xs={12}>
-      <EntityLinksCard />
-    </Grid>
-    <Grid item md={8} xs={12}>
-      <EntityHasSubcomponentsCard variant="gridItem" />
-    </Grid>
+    <EntitySwitch>
+      <EntitySwitch.Case if={isNewRelicDashboardAvailable}>
+        <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+          <EntityNewRelicDashboardCard />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
+
+    <EntitySwitch>
+      <EntitySwitch.Case if={hasLabels}>
+        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+          <EntityLinksCard />
+        </Grid>
+
+        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+          <EntityLabelsCard />
+        </Grid>
+      </EntitySwitch.Case>
+
+      <EntitySwitch.Case>
+        <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+          <EntityLinksCard />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
+
+    <EntitySwitch>
+      <EntitySwitch.Case if={isGithubInsightsAvailable}>
+        <Grid item xl={4} lg={6} md={6} sm={12} xs={12}>
+          <EntityAboutCard variant="gridItem" />
+        </Grid>
+
+        <Grid item xl={4} lg={6} md={6} sm={12} xs={12}>
+          <EntityGithubInsightsReadmeCard maxHeight={350} />
+        </Grid>
+
+        <Grid item xl={4} lg={6} md={6} sm={12} xs={12}>
+          <EntityRecentGithubActionsRunsCard limit={4} variant="gridItem" />
+        </Grid>
+
+        <Grid item xl={2} lg={3} md={6} sm={12} xs={12}>
+          <EntityGithubInsightsLanguagesCard />
+        </Grid>
+
+        <Grid item xl={2} lg={3} md={6} sm={12} xs={12}>
+          <EntityGithubInsightsReleasesCard />
+        </Grid>
+
+        <Grid item xl={4} lg={6} md={6} sm={12} xs={12}>
+          <EntityCatalogGraphCard variant="gridItem" height={400} />
+        </Grid>
+
+        <Grid item xl={4} lg={6} md={12} sm={12} xs={12}>
+          <EntityGithubInsightsComplianceCard />
+        </Grid>
+      </EntitySwitch.Case>
+
+      <EntitySwitch.Case>
+        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+          <EntityAboutCard variant="gridItem" />
+        </Grid>
+
+        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+          <EntityCatalogGraphCard variant="gridItem" height={400} />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
+
+    <EntitySwitch>
+      <EntitySwitch.Case if={isGithubPullRequestsAvailable}>
+        <Grid item xl={6} lg={12} md={12} sm={12} xs={12}>
+          <EntityGithubPullRequestsOverviewCard />
+        </Grid>
+
+        <Grid item xl={6} lg={12} md={12} sm={12} xs={12}>
+          <EntityHasSubcomponentsCard variant="gridItem" />
+        </Grid>
+      </EntitySwitch.Case>
+
+      <EntitySwitch.Case>
+        <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+          <EntityHasSubcomponentsCard variant="gridItem" />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
   </Grid>
 );
 
@@ -161,6 +282,30 @@ const serviceEntityPage = (
       if={isKubernetesAvailable}
     >
       <EntityKubernetesContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route
+      path="/pull-requests"
+      title="Pull Requests"
+      if={isGithubPullRequestsAvailable}
+    >
+      <EntityGithubPullRequestsContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/sentry" title="Sentry">
+      <EntitySentryContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route
+      if={isNewRelicDashboardAvailable}
+      path="/newrelic-dashboard"
+      title="New Relic Dashboard"
+    >
+      <EntityNewRelicDashboardContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/code-insights" title="Code Insights">
+      <EntityGithubInsightsContent />
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/api" title="API">
@@ -216,6 +361,21 @@ const websiteEntityPage = (
         </Grid>
         <Grid item md={6}>
           <EntityDependsOnResourcesCard variant="gridItem" />
+        </Grid>
+      </Grid>
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/sentry" title="Sentry">
+      <EntitySentryContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/api" title="API">
+      <Grid container spacing={3} alignItems="stretch">
+        <Grid item xs={12} md={6}>
+          <EntityProvidedApisCard />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <EntityConsumedApisCard />
         </Grid>
       </Grid>
     </EntityLayout.Route>
@@ -327,6 +487,13 @@ const groupPage = (
         <Grid item xs={12} md={6}>
           <EntityLinksCard />
         </Grid>
+        <EntitySwitch>
+          <EntitySwitch.Case if={isGithubTeamPullRequestsAvailable}>
+            <Grid item md={5} xs={12}>
+              <EntityGithubGroupPullRequestsCard />
+            </Grid>
+          </EntitySwitch.Case>
+        </EntitySwitch>
       </Grid>
     </EntityLayout.Route>
   </EntityLayout>
@@ -346,13 +513,13 @@ const systemPage = (
         <Grid item md={4} xs={12}>
           <EntityLinksCard />
         </Grid>
-        <Grid item md={8}>
+        <Grid item md={12}>
           <EntityHasComponentsCard variant="gridItem" />
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={12}>
           <EntityHasApisCard variant="gridItem" />
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={12}>
           <EntityHasResourcesCard variant="gridItem" />
         </Grid>
       </Grid>
@@ -390,7 +557,7 @@ const domainPage = (
         <Grid item md={6} xs={12}>
           <EntityCatalogGraphCard variant="gridItem" height={400} />
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={12}>
           <EntityHasSystemsCard variant="gridItem" />
         </Grid>
       </Grid>

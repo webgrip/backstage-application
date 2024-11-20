@@ -3,7 +3,7 @@ app:
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: WebGrip
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -19,6 +19,7 @@ backend:
     # host: 127.0.0.1
   csp:
     connect-src: ["'self'", 'http:', 'https:']
+    img-src: ["'self'", 'data:', 'https://avatars.githubusercontent.com', 'https://img.shields.io']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
@@ -30,6 +31,13 @@ backend:
   database:
     client: better-sqlite3
     connection: ':memory:'
+#    client: pg
+#    connection:
+#      host: ${POSTGRES_HOST}
+#      port: ${POSTGRES_PORT}
+#      user: ${POSTGRES_USER}
+#      password: ${POSTGRES_PASSWORD}
+#    prefix: 'example_prefix_'
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
@@ -44,12 +52,18 @@ integrations:
     #   token: ${GHE_TOKEN}
 
 proxy:
-  ### Example for how to add a proxy endpoint for the frontend.
-  ### A typical reason to do this is to handle HTTPS and CORS for internal services.
-  # endpoints:
-  #   '/test':
-  #     target: 'https://example.com'
-  #     changeOrigin: true
+  endpoints:
+    '/sentry/api':
+      target: https://sentry.io/api/
+      allowedMethods: [ 'GET' ]
+      headers:
+        Authorization: Bearer ${SENTRY_TOKEN}
+    '/newrelic/apm/api':
+      target: https://api.newrelic.com/v2
+      headers:
+        X-Api-Key: ${NEW_RELIC_REST_API_KEY}
+      allowedHeaders:
+        - link
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
@@ -67,6 +81,13 @@ auth:
   providers:
     # See https://backstage.io/docs/auth/guest/provider
     guest: {}
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            - resolver: emailMatchingUserEntityProfileEmail
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -76,33 +97,44 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [Component, System, API, Resource, Domain, Location]
   locations:
-    # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
-      target: ../../examples/entities.yaml
-
-    # Local example template
-    - type: file
-      target: ../../examples/template/template.yaml
+      target: ./catalog/webgrip/webgrip-corporation.yaml
       rules:
-        - allow: [Template]
+        - allow: [User, Group, Location]
+  providers:
+    githubOrg:
+      id: production
+      githubUrl: https://github.com
+      orgs: [ 'webgrip' ]
+      schedule:
+        initialDelay: { seconds: 1 }
+        frequency: { hours: 1 }
+        timeout: { minutes: 50 }
+    github:
+      mainBranches:
+        organization: 'webgrip'
+        catalogPath: '/catalog-info.yaml'
+        filters:
+          branch: 'main'
+          repository: '.*'
+        schedule:
+          frequency: { minutes: 35 }
+          timeout: { minutes: 3 }
+      masterBranches:
+        organization: 'webgrip'
+        catalogPath: '/catalog-info.yaml'
+        filters:
+          branch: 'master'
+          repository: '.*'
+        schedule:
+          frequency: { minutes: 35 }
+          timeout: { minutes: 3 }
 
-    # Local example organizational data
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, Group]
 
-    ## Uncomment these lines to add more example data
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
-
-    ## Uncomment these lines to add an example org
-    # - type: url
-    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
-    #   rules:
-    #     - allow: [User, Group]
+sentry:
+  organization: vendic
 
 kubernetes:
   # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options

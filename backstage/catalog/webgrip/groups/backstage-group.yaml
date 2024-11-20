@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: backstage
+  namespace: webgrip
+  title: Backstage
+  description: Backstage
+  labels:
+    tier: "2"
+  annotations:
+    github.com/project-slug: webgrip/backstage
+    simpleicons.org/icon-slug: backstage
+  tags:
+    - backstage
+    - infrastructure
+    - operations
+  links:
+    - url: http://example.com/group/backstage/
+      title: Readme
+      icon: book
+      type: website
+    - url: http://monitoring-platform.test/dashboard/backstage
+      title: Dashboard
+      icon: dashboard
+      type: website
+spec:
+  type: sub-department
+  profile:
+    displayName: Backstage
+    email: backstage@webgrip.nl #TODO change email
+    picture: https://api.dicebear.com/7.x/identicon/svg?seed=Fluffy&backgroundColor=ffdfbf
+  parent: group:webgrip/infrastructure
+  children: []
