@@ -3,7 +3,7 @@ concurrency:
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 name: Push Workflow
 jobs:
   build:
