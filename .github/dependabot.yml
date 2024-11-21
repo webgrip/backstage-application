@@ -1,8 +1,3 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
   - package-ecosystem: 'npm'
@@ -12,17 +7,13 @@ updates:
       - '/backstage/packages/backend'
     schedule:
       interval: 'daily'
-    groups:
-      dependencies:
-        patterns:
-          - '*'
-        exclude-patterns:
-          - '@backstage/*'
-          - '@spotify/*'
-          - '@testing-library/*'
-          - 'typescript'
-          - 'prettier'
-          - 'better-sqlite3'
+    ignore:
+      - dependency-name: "@backstage/*"
+      - dependency-name: "@spotify/*"
+      - dependency-name: "@testing-library/*"
+      - dependency-name: "typescript"
+      - dependency-name: "prettier"
+      - dependency-name: "better-sqlite3"
 
   - package-ecosystem: github-actions
     directory: "/"
