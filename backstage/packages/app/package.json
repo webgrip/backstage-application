@@ -14,6 +14,7 @@
     "lint": "backstage-cli package lint"
   },
   "dependencies": {
+    "@backstage-community/plugin-analytics-module-ga4": "^0.2.11",
     "@backstage-community/plugin-newrelic": "^0.3.54",
     "@backstage-community/plugin-newrelic-dashboard": "^0.3.14",
     "@backstage-community/plugin-sentry": "^1.0.2",

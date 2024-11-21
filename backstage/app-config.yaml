@@ -1,9 +1,17 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: ${APP_BASE_URL}
+
+  analytics:
+    ga4:
+      measurementId: ${GA_MEASUREMENT_ID}
+      contentGrouping: pluginId
+      allowedContexts: ['pluginId']
+#      debug: true # Logs analytics event to the web console
+#      testMode: true # Prevents data being sent to GA
 
 organization:
-  name: WebGrip
+  name: ${ORG_NAME}
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -14,15 +22,28 @@ backend:
   #     - secret: ${BACKEND_SECRET}
   baseUrl: http://localhost:7007
   listen:
-    port: 7007
-    host: 0.0.0.0
+    port: ${APP_PORT}
+    host: ${APP_HOST}
   csp:
     connect-src: ["'self'", 'http:', 'https:']
-    img-src: ["'self'", 'data:', 'https://avatars.githubusercontent.com', 'https://img.shields.io']
+    img-src: [
+      "'self'",
+      'data:',
+      'https://avatars.githubusercontent.com',
+      'https://img.shields.io',
+      'https://www.google-analytics.com'
+    ]
+    script-src:
+      [
+        "'self'",
+        "'unsafe-eval'",
+        'https://www.google-analytics.com',
+        'https://www.googletagmanager.com',
+      ]
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
-    origin: http://localhost:3000
+    origin: ${APP_BASE_URL}
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production

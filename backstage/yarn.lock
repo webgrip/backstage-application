@@ -2769,6 +2769,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@backstage-community/plugin-analytics-module-ga4@npm:^0.2.11":
+  version: 0.2.11
+  resolution: "@backstage-community/plugin-analytics-module-ga4@npm:0.2.11"
+  dependencies:
+    "@backstage/config": "npm:^1.2.0"
+    "@backstage/core-components": "npm:^0.15.1"
+    "@backstage/core-plugin-api": "npm:^1.10.0"
+    "@backstage/frontend-plugin-api": "npm:^0.9.0"
+    react-ga4: "npm:^2.0.0"
+  peerDependencies:
+    react: ^16.13.1 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
+    react-router-dom: 6.0.0-beta.0 || ^6.3.0
+  checksum: 10c0/fd1f61a22fa868a9bed0680329dd1b718d4beaa8bd2dc2c1624394b1a86961c60a6666f7bcf1df3db2a44a882f312591513bfaf3139ce90150eb507a83449e22
+  languageName: node
+  linkType: hard
+
 "@backstage-community/plugin-github-actions@npm:^0.6.24":
   version: 0.6.24
   resolution: "@backstage-community/plugin-github-actions@npm:0.6.24"
@@ -14999,6 +15016,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:packages/app"
   dependencies:
+    "@backstage-community/plugin-analytics-module-ga4": "npm:^0.2.11"
     "@backstage-community/plugin-newrelic": "npm:^0.3.54"
     "@backstage-community/plugin-newrelic-dashboard": "npm:^0.3.14"
     "@backstage-community/plugin-sentry": "npm:^1.0.2"
@@ -28726,6 +28744,13 @@ __metadata:
   version: 3.2.2
   resolution: "react-fast-compare@npm:3.2.2"
   checksum: 10c0/0bbd2f3eb41ab2ff7380daaa55105db698d965c396df73e6874831dbafec8c4b5b08ba36ff09df01526caa3c61595247e3269558c284e37646241cba2b90a367
+  languageName: node
+  linkType: hard
+
+"react-ga4@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "react-ga4@npm:2.1.0"
+  checksum: 10c0/314aa86dd7cb868535f26bfb8b537d3b3c20649c66b2b942fba72e081295441446932a4ae96499231c8a4836ab0a222a97b1bd03633b8cc1477991efe93444cd
   languageName: node
   linkType: hard
 
