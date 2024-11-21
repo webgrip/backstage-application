@@ -18,6 +18,10 @@ updates:
           - '*'
         exclude-patterns:
           - '@backstage/*'
+          - '@spotify/*'
+          - '@testing-library/*'
+          - 'typescript'
+          - 'prettier'
 
   - package-ecosystem: github-actions
     directory: "/"
