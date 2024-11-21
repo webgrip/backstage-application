@@ -2786,9 +2786,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage-community/plugin-github-actions@npm:^0.6.24":
-  version: 0.6.24
-  resolution: "@backstage-community/plugin-github-actions@npm:0.6.24"
+"@backstage-community/plugin-github-actions@npm:^0.6.25":
+  version: 0.6.25
+  resolution: "@backstage-community/plugin-github-actions@npm:0.6.25"
   dependencies:
     "@backstage/catalog-model": "npm:^1.7.0"
     "@backstage/core-compat-api": "npm:^0.3.1"
@@ -2810,7 +2810,7 @@ __metadata:
     react: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-router-dom: 6.0.0-beta.0 || ^6.3.0
-  checksum: 10c0/7385728b055996f6cc678da84aa04bc6c88729575db926de9226c78c554b06342ca8847d7ef57af12e4dbe7ab6f3c6bc3b9e3aa44b42da960be7583265077363
+  checksum: 10c0/060810416770101174052c5d8864b9f5db7e93a0cdd06618527d111842c1f0e7e940303f7ab19cb3106c61202e258d89e138ec81e0ed6b3904867670f5d06ae9
   languageName: node
   linkType: hard
 
@@ -2854,9 +2854,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage-community/plugin-sentry@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@backstage-community/plugin-sentry@npm:1.0.2"
+"@backstage-community/plugin-sentry@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@backstage-community/plugin-sentry@npm:1.0.3"
   dependencies:
     "@backstage/catalog-model": "npm:^1.7.0"
     "@backstage/core-compat-api": "npm:^0.3.1"
@@ -2875,7 +2875,7 @@ __metadata:
     react: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-router-dom: 6.0.0-beta.0 || ^6.3.0
-  checksum: 10c0/a1e862230d582674907892e0acd94255aa5b2c286a330006748c91000c494dec966c7abe616432abd42e9d5d6653f44e62df2e58e82810e2422b5ec2481ce284
+  checksum: 10c0/77468e8c9f46d902e1141c87618912b2bf829e486c9c235c569043471a862bbe9313d6f63aed00ab6f3012e2e2f87d7e5efe21a612fb9e3c5e9651085c2b6df4
   languageName: node
   linkType: hard
 
@@ -10155,6 +10155,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@opentelemetry/semantic-conventions@npm:^1.28.0":
+  version: 1.28.0
+  resolution: "@opentelemetry/semantic-conventions@npm:1.28.0"
+  checksum: 10c0/deb8a0f744198071e70fea27143cf7c9f7ecb7e4d7b619488c917834ea09b31543c1c2bcea4ec5f3cf68797f0ef3549609c14e859013d9376400ac1499c2b9cb
+  languageName: node
+  linkType: hard
+
 "@opentelemetry/sql-common@npm:^0.40.1":
   version: 0.40.1
   resolution: "@opentelemetry/sql-common@npm:0.40.1"
@@ -15019,7 +15026,7 @@ __metadata:
     "@backstage-community/plugin-analytics-module-ga4": "npm:^0.2.11"
     "@backstage-community/plugin-newrelic": "npm:^0.3.54"
     "@backstage-community/plugin-newrelic-dashboard": "npm:^0.3.14"
-    "@backstage-community/plugin-sentry": "npm:^1.0.2"
+    "@backstage-community/plugin-sentry": "npm:^1.0.3"
     "@backstage/app-defaults": "npm:^1.5.13"
     "@backstage/catalog-model": "npm:^1.7.1"
     "@backstage/cli": "npm:^0.29.0"
@@ -15683,7 +15690,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "backend@workspace:packages/backend"
   dependencies:
-    "@backstage-community/plugin-github-actions": "npm:^0.6.24"
+    "@backstage-community/plugin-github-actions": "npm:^0.6.25"
     "@backstage/backend-defaults": "npm:^0.5.3"
     "@backstage/backend-plugin-api": "npm:^1.0.2"
     "@backstage/cli": "npm:^0.29.0"
@@ -15722,7 +15729,7 @@ __metadata:
     "@opentelemetry/resources": "npm:^1.28.0"
     "@opentelemetry/sdk-logs": "npm:^0.55.0"
     "@opentelemetry/sdk-node": "npm:^0.55.0"
-    "@opentelemetry/semantic-conventions": "npm:^1.27.0"
+    "@opentelemetry/semantic-conventions": "npm:^1.28.0"
     app: "link:../app"
     better-sqlite3: "npm:^9.0.0"
     node-gyp: "npm:^10.0.0"
