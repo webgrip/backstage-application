@@ -11,7 +11,7 @@ updates:
       - '/backstage/packages/app'
       - '/backstage/packages/backend'
     schedule:
-      interval: 'weekly'
+      interval: 'daily'
     groups:
       dependencies:
         patterns:
@@ -22,8 +22,9 @@ updates:
           - '@testing-library/*'
           - 'typescript'
           - 'prettier'
+          - 'better-sqlite3'
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
