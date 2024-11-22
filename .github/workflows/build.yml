@@ -7,6 +7,8 @@ on:
       DOCKER_TOKEN:
         description: 'DockerHub token'
         required: true
+  workflow_dispatch:
+
 
 name: Build
 
