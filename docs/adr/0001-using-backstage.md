@@ -1,4 +1,12 @@
-# Adoption of an Internal Developer Platform: Backstage vs. Port.io vs. OpsLevel
+---
+status: "proposed"
+date: "2024-11-22"
+decision-makers: "@Ryangr0"
+consulted: "@devops, @engineering, @product"
+informed: "@developers, @security"
+---
+
+# Adoption of Internal Developer Platform
 
 ## Context and Problem Statement
 
@@ -14,38 +22,35 @@ Our development teams are experiencing challenges due to a fragmented informatio
 
 ## Considered Options
 
-- **Option 1:** Implement **Backstage** as our Internal Developer Platform.
-- **Option 2:** Adopt **Port.io** as our Internal Developer Platform.
-- **Option 3:** Use **OpsLevel** to manage our developer operations.
-- **Option 4:** Continue with the current setup and processes (status quo).
-- **Option 5:** Develop a custom internal platform from scratch.
+- **Option 1:** Adopt [**Backstage**](https://backstage.io/) as our IDP.
+- **Option 2:** Adopt [**Port.io**](https://port.io/) as our IDP.
+- **Option 3:** Continue with the current setup and processes (status quo).
+- **Option 4:** Develop a custom internal platform from scratch.
 
 ## Decision Outcome
 
-Chosen option: **Implement Backstage as our Internal Developer Platform**, because it provides a flexible, open-source framework that addresses our current challenges by centralizing information, supporting customization, and integrating with our existing tools and workflows.
+Chosen option:
+**Adopt Backstage as our Internal Developer Platform**, because it provides the flexibility, extensibility, and community support needed to address our challenges effectively.
 
-### Positive Consequences
-
-- Centralization of project information through the Software Catalog.
-- Improved onboarding processes using Software Templates.
-- Enhanced documentation with TechDocs for better knowledge sharing.
-- Reduced dependencies on DevOps by enabling self-service operations.
-- Access to a wide range of community-supported plugins for extended functionality.
-
-### Negative Consequences
-
-- Requires initial setup and customization effort.
-- Learning curve associated with adopting a new platform.
-- Ongoing maintenance and updates to keep the platform current.
+### Consequences
+- Good, because Backstage is open-source and customizable.
+- Good, because it offers a wide range of community-supported plugins.
+- Good, because it can be integrated with our existing tools and infrastructure.
+- Bad, because it requires an initial setup effort.
+- Bad, because there is a learning curve associated with adopting a new platform.
+- Bad, because ongoing maintenance and updates are required.
+- Bad, because it may lead to dependencies on a new platform.
+- Bad, because it may require additional training for team members.
+- Bad, because it may introduce new complexities to our workflows.
 
 #### Mitigating circumstances
 - A fair amount of documentation and community support available to assist with the setup and customization.
 - @Ryangr0 has already set up a local instance of Backstage and is familiar with the platform
-
+- @Ryangr0 is willing to lead the effort to onboard the team and provide necessary training.
 
 ## Pros and Cons of the Options
 
-### **Option 1: Implement Backstage**
+### **Option 1: Adopt Backstage**
 
 **Description:** Adopt Backstage, an open-source Internal Developer Platform framework by Spotify, to centralize information and streamline developer workflows.
 
@@ -78,23 +83,7 @@ Chosen option: **Implement Backstage as our Internal Developer Platform**, becau
 - **Less Customizable:** May not offer the same level of customization as an open-source solution.
 - **Vendor Lock-In:** Dependence on a third-party provider for features and updates.
 
-### **Option 3: Use OpsLevel**
-
-**Description:** Leverage OpsLevel, a microservice catalog and developer portal aimed at helping teams manage service ownership and compliance.
-
-**Pros:**
-
-- **Service Ownership Management:** Strong focus on microservice ownership and best practices.
-- **Integration Capabilities:** Supports integration with many popular tools and platforms.
-- **Compliance Tracking:** Offers features to ensure services meet organizational standards.
-
-**Cons:**
-
-- **Cost:** Subscription fees could be substantial over time.
-- **Limited Customization:** May not fully align with our unique workflows and processes.
-- **Learning Curve:** Teams may need to adjust existing workflows to fit the platform's model.
-
-### **Option 4: Continue with Current Setup**
+### **Option 3: Continue with Current Setup**
 
 **Description:** Maintain the existing processes and tools without significant changes.
 
@@ -109,7 +98,7 @@ Chosen option: **Implement Backstage as our Internal Developer Platform**, becau
 - **Scalability Issues:** Challenges may become more pronounced as the organization grows.
 - **Lack of Standardization:** Divergence in standards and infrastructure solutions across teams continues.
 
-### **Option 5: Develop a Custom Platform**
+### **Option 4: Develop a Custom Platform**
 
 **Description:** Build a bespoke internal platform tailored to our specific needs from scratch.
 
@@ -124,51 +113,9 @@ Chosen option: **Implement Backstage as our Internal Developer Platform**, becau
 - **Maintenance Burden:** Ongoing responsibility for updates, bug fixes, and enhancements.
 - **Delayed Benefits:** Longer time to realize advantages compared to adopting an existing solution.
 
-## Detailed Analysis
-
-### Backstage vs. Port.io vs. OpsLevel
-
-#### **Customization and Flexibility**
-
-- **Backstage:** Highly customizable due to its open-source nature; we can modify and extend it to fit our exact needs.
-- **Port.io and OpsLevel:** Offer customization but within the constraints of their platforms; may not accommodate all specific requirements.
-
-#### **Cost Considerations**
-
-- **Backstage:** No licensing fees; however, there is a cost in terms of time and resources for setup and maintenance.
-- **Port.io and OpsLevel:** Subscription-based models that incur ongoing licensing costs, which can increase with team size and usage.
-
-#### **Community and Support**
-
-- **Backstage:** Backed by a strong open-source community with regular contributions and updates.
-- **Port.io and OpsLevel:** Provide professional support as part of their services but may have slower feature development cycles based on their product roadmaps.
-
-#### **Integration with Existing Tools**
-
-- **Backstage:** Wide range of plugins and the ability to develop custom plugins for seamless integration with our tools.
-- **Port.io and OpsLevel:** Support integrations but may not cover all the tools we use or require custom development within their platforms.
-
-#### **Maintenance and Updates**
-
-- **Backstage:** We are responsible for maintaining and updating the platform, which gives us control but also adds overhead.
-- **Port.io and OpsLevel:** Maintenance and updates are handled by the providers, reducing our operational burden.
-
-#### **Vendor Lock-In Risks**
-
-- **Backstage:** Being open-source, there's no vendor lock-in; we can modify or migrate as needed.
-- **Port.io and OpsLevel:** Potential for vendor lock-in, making future migrations more complex.
-
-## Conclusion
-
-After evaluating the options, **Backstage** emerges as the most suitable choice for our organization. Its open-source nature provides the flexibility and control we need to address our current challenges effectively. While it requires an initial investment in setup and learning, the long-term benefits of customization, community support, and avoidance of vendor lock-in align well with our strategic goals.
-
-## Links
+## More Information
 
 - [Backstage Official Documentation](https://backstage.io/)
 - [Port.io Website](https://port.io/)
 - [OpsLevel Website](https://www.opslevel.com/)
 - [MADR Documentation](https://adr.github.io/madr/)
-
-## Short Summary
-
-We have decided to adopt **Backstage** as our Internal Developer Platform after comparing it with **Port.io** and **OpsLevel**. Backstage offers the customization, flexibility, and integration capabilities we require, without the ongoing licensing costs associated with proprietary platforms. This decision aligns with our goals to centralize information, empower our developers, and maintain control over our development environment.
