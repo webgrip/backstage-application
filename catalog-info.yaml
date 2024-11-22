@@ -23,6 +23,7 @@ metadata:
   tags:
     - backstage
   annotations:
+    backstage.io/adr-location: docs/adr
     github.com/project-slug: webgrip/backstage
     backstage.io/techdocs-ref: dir:.
     backstage.io/kubernetes-label-selector: 'app.kubernetes.io/name=backstage'
