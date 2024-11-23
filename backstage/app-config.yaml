@@ -113,16 +113,17 @@ scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
+  readonly: true
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
     - allow: [Component, System, API, Resource, Domain, Location]
   locations:
-    - type: file
-      target: ./catalog/webgrip/webgrip-corporation.yaml
+    - type: url
+      target: https://github.com/webgrip/organisation-public/blob/main/catalog/groups/c-level-group.yaml
       rules:
-        - allow: [User, Group, Location]
+        - allow: [ Group ]
   providers:
     githubOrg:
       id: production
