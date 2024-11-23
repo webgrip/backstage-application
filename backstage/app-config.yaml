@@ -167,11 +167,11 @@ permission:
 devTools:
   info:
     packagePrefixes:
-      - '@roadiehq/'
       - '@backstage-community/'
-      - '@spotify/'
       - '@dweber019/backstage-plugin-simple-icons'
       - '@opentelemetry/'
+      - '@roadiehq/'
+      - '@spotify/'
   externalDependencies:
     endpoints:
       - name: 'Google'
