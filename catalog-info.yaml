@@ -26,7 +26,7 @@ metadata:
     backstage.io/adr-location: docs/adr
     github.com/project-slug: webgrip/backstage
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-namespace: default
+    backstage.io/kubernetes-id: my-kubernetes-component
     backstage.io/code-coverage: enabled
     simpleicons.org/icon-slug: backstage
 spec:
