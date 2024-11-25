@@ -74,7 +74,6 @@ backend.add(import('@backstage/plugin-search-backend-module-pg'));
 backend.add(import('@backstage/plugin-search-backend-module-catalog'));
 backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 
-// search ADR
 backend.add(import('@backstage-community/search-backend-module-adr'));
 
 // kubernetes

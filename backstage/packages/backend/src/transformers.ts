@@ -10,6 +10,22 @@ export const myTeamTransformer: TeamTransformer = async (team, ctx) => {
 
   if (backstageTeam) {
     backstageTeam.metadata.namespace = 'webgrip';
+    backstageTeam.metadata.description = team.description;
+    backstageTeam.metadata.title = team.name;
+
+    backstageTeam.metadata.annotations = backstageTeam.metadata.annotations || {};
+
+    switch (team.name?.toLowerCase()) {
+      case 'infrastructure':
+        backstageTeam.metadata.annotations["simpleicons.org/icon-slug"] = 'rotaryinternational';
+        break;
+      case 'backstage':
+        backstageTeam.metadata.annotations["simpleicons.org/icon-slug"] = 'backstage';
+        break;
+      case 'c-level':
+        backstageTeam.metadata.annotations["simpleicons.org/icon-slug"] = 'protodotio';
+        break;
+    }
   }
 
   return backstageTeam;

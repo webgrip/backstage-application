@@ -5,7 +5,7 @@ metadata:
   namespace: webgrip
   title: Backstage Application
   description: |
-    Backstage is an open-source developer portal that puts the developer experience first.
+    The Backstage Application is the main application that serves the Backstage UI. It is a React application that is built with TypeScript.
   labels:
     tier: "2"
   links:
@@ -46,3 +46,23 @@ metadata:
 spec:
   owner: group:webgrip/backstage
   domain: webgrip/operations-domain
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: backstage-application-postgres
+  namespace: webgrip
+  title: Backstage Repository
+  description: |
+    The Postgres database for the Backstage application. It has pgvector and uuid-ossp extensions enabled.
+  labels:
+    tier: "2"
+  annotations:
+    github.com/project-slug: webgrip/backstage
+    simpleicons.org/icon-slug: postgres
+  tags:
+    - backstage
+spec:
+  type: database
+  owner: group:webgrip/backstage
+  system: backstage-system

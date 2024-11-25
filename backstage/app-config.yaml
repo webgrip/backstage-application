@@ -6,7 +6,7 @@ app:
     ga4:
       measurementId: ${GA_MEASUREMENT_ID}
       contentGrouping: pluginId
-      allowedContexts: ['pluginId']
+      allowedContexts: [ 'pluginId' ]
 #      debug: true # Logs analytics event to the web console
 #      testMode: true # Prevents data being sent to GA
 
@@ -25,7 +25,7 @@ backend:
     port: ${APP_PORT}
     host: ${APP_HOST}
   csp:
-    connect-src: ["'self'", 'http:', 'https:']
+    connect-src: [ "'self'", 'http:', 'https:' ]
     img-src: [
       "'self'",
       'data:',
@@ -44,21 +44,34 @@ backend:
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
     origin: ${APP_BASE_URL}
-    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    methods: [ GET, HEAD, PATCH, POST, PUT, DELETE ]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
-#    client: pg
-#    connection:
-#      host: ${POSTGRES_HOST}
-#      port: ${POSTGRES_PORT}
-#      user: ${POSTGRES_USER}
-#      password: ${POSTGRES_PASSWORD}
-#    prefix: 'example_prefix_'
-  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+    #    client: better-sqlite3
+    #    connection: ':memory:'
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+    prefix: 'example_prefix_'
+    # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+    # https://node-postgres.com/features/ssl
+    # you can set the sslmode configuration option via the `PGSSLMODE` environment variable
+    # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
+    # ssl:
+    #   ca: # if you have a CA file and want to verify it you can uncomment this section
+    #     $file: <file-path>/ca/server.crt
+    # Refer to Tarn docs for default values on PostgreSQL pool configuration - https://github.com/Vincit/tarn.js
+    knexConfig:
+      pool:
+        min: 3
+        max: 12
+        acquireTimeoutMillis: 60000
+        idleTimeoutMillis: 60000
 
 integrations:
   github:
@@ -97,10 +110,7 @@ techdocs:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
-  # see https://backstage.io/docs/auth/ to learn about auth providers
   providers:
-    # See https://backstage.io/docs/auth/guest/provider
-    guest: {}
     github:
       development:
         clientId: ${AUTH_GITHUB_CLIENT_ID}
@@ -110,15 +120,14 @@ auth:
             - resolver: emailMatchingUserEntityProfileEmail
 
 scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+# see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
-  readonly: true
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Domain, Location]
+    - allow: [ Component, System, API, Resource, Domain, Location ]
   locations:
     - type: url
       target: https://github.com/webgrip/organisation-public/blob/main/catalog/groups/c-level-group.yaml
@@ -158,7 +167,7 @@ sentry:
   organization: vendic
 
 kubernetes:
-  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+# see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
 
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
 permission:
@@ -181,3 +190,14 @@ devTools:
       - name: 'Google Public DNS'
         type: 'ping'
         target: '8.8.8.8'
+
+search:
+  pg:
+    highlightOptions:
+      useHighlight: true # Used to enable to disable the highlight feature. The default value is true
+      maxWord: 35 # Used to set the longest headlines to output. The default value is 35.
+      minWord: 15 # Used to set the shortest headlines to output. The default value is 15.
+      shortWord: 3 # Words of this length or less will be dropped at the start and end of a headline, unless they are query terms. The default value of three (3) eliminates common English articles.
+      highlightAll: false # If true the whole document will be used as the headline, ignoring the preceding three parameters. The default is false.
+      maxFragments: 0 # Maximum number of text fragments to display. The default value of zero selects a non-fragment-based headline generation method. A value greater than zero selects fragment-based headline generation (see the linked documentation above for more details).
+      fragmentDelimiter: ' ... ' # Delimiter string used to concatenate fragments. Defaults to " ... ".

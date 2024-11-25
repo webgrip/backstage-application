@@ -3,7 +3,6 @@ services:
     container_name: backstage-application
     build:
       context: backstage
-#      dockerfile: packages/backend/Dockerfile
       dockerfile: Dockerfile-multistage
       target: runtime
     env_file:
@@ -50,8 +49,12 @@ services:
 
   backstage-postgres:
     container_name: backstage-postgres
-    image: postgres:latest
+    image: webgrip/backstage-application-postgres:latest
+    build:
+      context: ops/docker/postgresql
+      dockerfile: Dockerfile
     volumes:
+      - ./ops/postgresql/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
       - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: backstage
@@ -59,19 +62,19 @@ services:
       POSTGRES_DB: backstage
     ports:
       - "5432:5432"
-
-  structurizr:
-    container_name: structurizr
-    image: structurizr/lite:latest
-    volumes:
-      - ./docs/structurizr/config:/usr/local/structurizr/config:ro
-      - ./docs/structurizr/workspace:/usr/local/structurizr/workspace
-    ports:
-      - "9998:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=custom-profile
-      - STRUCTURIZR_WORKSPACE_PATH=workspace
-    command: ["java", "--enable-native-access=ALL-UNNAMED", "--add-modules=jdk.incubator.vector", "-jar", "/usr/local/structurizr-lite.war"]
+#
+#  structurizr:
+#    container_name: structurizr
+#    image: structurizr/lite:latest
+#    volumes:
+#      - ./docs/structurizr/config:/usr/local/structurizr/config:ro
+#      - ./docs/structurizr/workspace:/usr/local/structurizr/workspace
+#    ports:
+#      - "9998:8080"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=custom-profile
+#      - STRUCTURIZR_WORKSPACE_PATH=workspace
+#    command: ["java", "--enable-native-access=ALL-UNNAMED", "--add-modules=jdk.incubator.vector", "-jar", "/usr/local/structurizr-lite.war"]
 
 networks:
   default:
