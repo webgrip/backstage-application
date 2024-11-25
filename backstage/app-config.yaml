@@ -167,7 +167,23 @@ sentry:
   organization: vendic
 
 kubernetes:
-# see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+  frontend:
+    podDelete:
+      enabled: true
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters:
+        - url: ${K8S_CLUSTER}
+          name: digital-ocean-cluster-1
+          title: 'My Digital Ocean Cluster Number One'
+          authProvider: 'serviceAccount'
+          skipTLSVerify: true
+          skipMetricsLookup: true
+          serviceAccountToken: ${K8S_SERVICE_ACCOUNT_TOKEN_BACKSTAGE}
+          dashboardUrl: http://127.0.0.1:8433 # url copied from running the command: minikube service kubernetes-dashboard -n kubernetes-dashboard
+          dashboardApp: standard
 
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
 permission:

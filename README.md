@@ -13,3 +13,10 @@ yarn tsc
 cd ..
 docker-compose up --build
 ```
+
+Setting up cluster
+
+```ssh
+kubectl -n backstage apply -f ops/k8s/service-account.yaml
+kubectl -n backstage get secret admin-user -o jsonpath={".data.token"} | base64 -d
+```
