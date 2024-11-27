@@ -6,8 +6,18 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "quote-chart.labels" . | nindent 4 }}
+  {{- if .Values.ingress.annotations }}
+  annotations:
+    {{- .Values.ingress.annotations | toYaml | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+      - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.tls.secretName }}-{{include "quote-chart.fullname" .}}
+  {{- end }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:
