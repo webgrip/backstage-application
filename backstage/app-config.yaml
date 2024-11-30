@@ -176,13 +176,12 @@ kubernetes:
     - type: 'config'
       clusters:
         - url: ${K8S_CLUSTER}
-          name: digital-ocean-cluster-1
-          title: 'My Digital Ocean Cluster Number One'
+          name: staging-doks-cluster
+          title: 'Staging Kubernetes Cluster'
           authProvider: 'serviceAccount'
-          skipTLSVerify: true
-          skipMetricsLookup: true
+          caData: ${K8S_CONFIG_CA_DATA}
           serviceAccountToken: ${K8S_SERVICE_ACCOUNT_TOKEN_BACKSTAGE}
-          dashboardUrl: http://127.0.0.1:8433 # url copied from running the command: minikube service kubernetes-dashboard -n kubernetes-dashboard
+          dashboardUrl: http://127.0.0.1:8443
           dashboardApp: standard
 
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
