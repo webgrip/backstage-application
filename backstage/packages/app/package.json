@@ -14,6 +14,7 @@
     "lint": "backstage-cli package lint"
   },
   "dependencies": {
+    "@anakz/backstage-plugin-library-check": "^0.1.0",
     "@backstage-community/plugin-adr": "^0.6.28",
     "@backstage-community/plugin-analytics-module-ga4": "^0.2.11",
     "@backstage-community/plugin-newrelic": "^0.3.54",

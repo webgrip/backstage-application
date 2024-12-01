@@ -100,6 +100,11 @@ import {
   isAdrAvailable
 } from '@backstage-community/plugin-adr';
 
+import {
+  LibraryCheckPage,
+  useIsProjectLibrariesAvailable,
+} from '@anakz/backstage-plugin-library-check';
+
 const techdocsContent = (
   <EntityTechdocsContent>
     <TechDocsAddons>
@@ -337,6 +342,14 @@ const serviceEntityPage = (
     <EntityLayout.Route if={isAdrAvailable} path="/adrs" title="ADRs">
       <EntityAdrContent />
     </EntityLayout.Route>
+
+    <EntityLayout.Route
+      path="/library-check"
+      title="Libraries"
+      if={useIsProjectLibrariesAvailable}
+    >
+      <LibraryCheckPage />
+    </EntityLayout.Route>
   </EntityLayout>
 );
 
@@ -561,6 +574,9 @@ const systemPage = (
         ]}
         unidirectional={false}
       />
+    </EntityLayout.Route>
+    <EntityLayout.Route if={isAdrAvailable} path="/adrs" title="ADRs">
+      <EntityAdrContent />
     </EntityLayout.Route>
   </EntityLayout>
 );

@@ -50,6 +50,7 @@ import { DevToolsPage } from '@backstage/plugin-devtools';
 import { customDevToolsPage } from './components/devtools/CustomDevToolsPage';
 import { devToolsInfoReadPermission } from "@backstage/plugin-devtools-common";
 import {CatalogUnprocessedEntitiesPage} from "@backstage/plugin-catalog-unprocessed-entities";
+import { LibraryCheckIndexPage } from '@anakz/backstage-plugin-library-check';
 
 import * as plugins from './plugins';
 
@@ -135,6 +136,7 @@ const routes = (
         {customDevToolsPage}
     </Route>plg
     <Route path="/catalog-unprocessed-entities" element={<CatalogUnprocessedEntitiesPage />} />
+    <Route path="/library-check" element={<LibraryCheckIndexPage />} />
   </FlatRoutes>
 );
 

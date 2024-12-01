@@ -127,6 +127,11 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
           <SidebarItem icon={ExtensionIcon} to="newrelic" text="New Relic" />
           {/* Items in this group will be scrollable if they run out of space */}
         </SidebarScrollWrapper>
+        <SidebarItem
+          icon={ExtensionIcon}
+          to="library-check"
+          text="Libraries"
+        />
       </SidebarGroup>
       <SidebarSpace />
       <SidebarDivider />

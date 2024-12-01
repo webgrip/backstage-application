@@ -11,6 +11,15 @@ import { createBackendModule } from '@backstage/backend-plugin-api';
 import { githubOrgEntityProviderTransformsExtensionPoint } from '@backstage/plugin-catalog-backend-module-github-org';
 import {myTeamTransformer, myUserTransformer} from "./transformers";
 // import {ragAiOptions} from "./ragAiOptions";
+import libraryCheck from './plugins/libraryCheck';
+
+const libraryCheckModule = createBackendModule({
+    pluginId: 'catalog',
+    moduleId: 'library-check',
+    register({ logger, database, config }) {
+        return libraryCheck({ logger, database, config });
+    },
+});
 
 const githubOrgModule = createBackendModule({
     pluginId: 'catalog',
@@ -84,5 +93,7 @@ backend.add(import('@backstage-community/plugin-adr-backend'));
 
 // devtools
 backend.add(import('@backstage/plugin-devtools-backend'));
+
+backend.add(import('@anakz/backstage-plugin-library-check-backend'));
 
 backend.start();
