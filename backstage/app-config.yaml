@@ -152,6 +152,7 @@ catalog:
         schedule:
           frequency: { minutes: 35 }
           timeout: { minutes: 3 }
+        validateLocationsExist: true
       masterBranches:
         organization: 'webgrip'
         catalogPath: '/catalog-info.yaml'
@@ -161,7 +162,7 @@ catalog:
         schedule:
           frequency: { minutes: 35 }
           timeout: { minutes: 3 }
-
+        validateLocationsExist: true
 
 sentry:
   organization: vendic
