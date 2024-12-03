@@ -87,6 +87,6 @@ backend.add(import('@backstage-community/plugin-adr-backend'));
 backend.add(import('@backstage/plugin-devtools-backend'));
 
 // @ts-ignore
-backend.add(import(legacyPlugin('libraryCheck', import('./plugins/libraryCheck.ts'))));
+backend.add(legacyPlugin('libraryCheck', import('./plugins/libraryCheck')));
 
 backend.start();

@@ -1,15 +1,23 @@
-import { PluginEnvironment } from '../types';
 import { Router } from 'express';
 import {
   DatabaseLibraryCheckStore,
   createRouter,
-} from '@anakz/backstage-plugin-library-check-backend';
+} from '../../../../plugins/library-check-backend';
+import {
+  PluginDatabaseManager,
+} from '@backstage/backend-common';
+import { Logger } from 'winston';
+import { Config } from '@backstage/config';
 
 export default async function createPlugin({
                                              logger,
                                              database,
                                              config,
-                                           }: PluginEnvironment): Promise<Router> {
+                                           }: {
+  logger: Logger,
+  database: PluginDatabaseManager,
+  config: Config
+}): Promise<Router> {
   const db = await DatabaseLibraryCheckStore.create({
     database: database,
   });

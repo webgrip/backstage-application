@@ -434,6 +434,13 @@ const defaultEntityPage = (
     <EntityLayout.Route if={isAdrAvailable} path="/adrs" title="ADRs">
       <EntityAdrContent />
     </EntityLayout.Route>
+
+    <EntityLayout.Route
+      path="/library-check"
+      title="Libraries"
+    >
+      <LibraryCheckPage />
+    </EntityLayout.Route>
   </EntityLayout>
 );
 
