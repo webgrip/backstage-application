@@ -10,5 +10,5 @@ export interface LibraryCheckExtensionPoint {
 
 export const libraryCheckExtensionPoint =
   createExtensionPoint<LibraryCheckExtensionPoint>({
-    id: 'libraryCheck'
+    id: 'library-check'
   })

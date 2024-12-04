@@ -1,5 +1,7 @@
+import {Logger} from "winston";
+
 export class MyCustomProcessor {
-  constructor(logger: any) {
+  constructor(logger: Logger) {
     console.log(logger);
   }
 }
