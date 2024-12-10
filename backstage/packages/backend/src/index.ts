@@ -1,17 +1,17 @@
-/*
- * Hi!
- *
- * Note that this is an EXAMPLE Backstage backend. Please check the README.
- *
- * Happy hacking!
- */
-
 import { createBackend } from '@backstage/backend-defaults';
-import { createBackendModule } from '@backstage/backend-plugin-api';
+import {
+    coreServices,
+    createBackendModule
+} from '@backstage/backend-plugin-api';
 import { githubOrgEntityProviderTransformsExtensionPoint } from '@backstage/plugin-catalog-backend-module-github-org';
 import {myTeamTransformer, myUserTransformer} from "./transformers";
 // import {ragAiOptions} from "./ragAiOptions";
-import { legacyPlugin } from '@backstage/backend-common';
+import {
+    // legacyPlugin,
+    loggerToWinstonLogger
+} from '@backstage/backend-common';
+import {catalogProcessingExtensionPoint} from "@backstage/plugin-catalog-node/alpha";
+import {LibraryCheckProcessor, LibraryCheckUpdaterProcessor} from "../../../plugins/library-check-backend";
 
 const githubOrgModule = createBackendModule({
     pluginId: 'catalog',
@@ -28,6 +28,58 @@ const githubOrgModule = createBackendModule({
         });
     },
 });
+
+const libraryCheckModule = createBackendModule({
+    pluginId: 'catalog', // name of the plugin that the module is targeting
+    moduleId: 'library-check',
+    register(env) {
+        env.registerInit({
+            deps: {
+                catalog: catalogProcessingExtensionPoint,
+                logger: coreServices.logger,
+                scheduler: coreServices.scheduler,
+                reader: coreServices.urlReader,
+                discovery: coreServices.discovery,
+                config: coreServices.rootConfig,
+            },
+            async init({ catalog, logger, scheduler, reader, discovery, config}) {
+
+                const defaultSchedule = {
+                    initialDelay: { seconds: 15 },
+                    frequency: { minutes: 10 },
+                    timeout: { minutes: 15 },
+                };
+                scheduler.createScheduledTaskRunner(defaultSchedule);
+
+                const winstonLogger = loggerToWinstonLogger(logger); // @TODO migrate to LoggerService
+                // Here you have the opportunity to interact with the extension
+                // point before the plugin itself gets instantiated
+                // catalog.addEntityProvider(new MyEntityProvider()); // just an example
+                catalog.addProcessor(
+                  LibraryCheckProcessor.fromConfig(
+                    config,
+                    {
+                        reader: reader,
+                        discoveryService: discovery,
+                        logger: winstonLogger
+                    }
+                  )
+                );
+                catalog.addProcessor(
+                  LibraryCheckUpdaterProcessor.fromConfig(
+                    config,
+                    {
+                        reader: reader,
+                        discoveryService: discovery,
+                        logger: winstonLogger
+                    }
+                  )
+                );
+            },
+        });
+    },
+});
+
 
 const backend = createBackend();
 
@@ -87,6 +139,8 @@ backend.add(import('@backstage-community/plugin-adr-backend'));
 backend.add(import('@backstage/plugin-devtools-backend'));
 
 // @ts-ignore
-backend.add(legacyPlugin('libraryCheck', import('./plugins/libraryCheck')));
+// backend.add(legacyPlugin('libraryCheck', import('./plugins/libraryCheck')));
+
+backend.add(libraryCheckModule);
 
 backend.start();
