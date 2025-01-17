@@ -1,0 +1,47 @@
+# v1.2.0
+
+name: Test
+run-name:  Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test putting label that doesn't exist on PR
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+#      - uses: actions-ecosystem/action-remove-labels@v1
+#        with:
+#          number: ${{ github.event.inputs.pull_request_number }}
+#          labels: |
+#            ${{ env.VHOSTUSER }}
+#            active-vhost
+#            preview failed
+#            updating preview
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          number: 35
+          labels: |
+            rest
+            123
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - uses: actions-ecosystem/action-add-labels@v1
+#        if: ${{ failure() }}
+#        with:
+#          number: ${{ github.event.inputs.pull_request_number }}
+#          labels: |
+#            preview failed
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
