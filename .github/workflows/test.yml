@@ -40,8 +40,19 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -d '{
                   "name": "rest",
-                  "color": "6A737D",
-                  "description": "This label was created automatically via GitHub Actions."
+                }' \
+            "https://api.github.com/repos/${{ github.repository }}/labels"
+
+      - name: Create label via GitHub API
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/vnd.github+json" \
+            -d '{
+                  "name": "123",
                 }' \
             "https://api.github.com/repos/${{ github.repository }}/labels"
 
