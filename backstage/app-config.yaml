@@ -18,6 +18,7 @@ backend:
   # See https://backstage.io/docs/auth/service-to-service-auth for
   # information on the format
   auth:
+   dangerouslyDisableDefaultAuth: true
    keys:
     - secret: ${BACKEND_SECRET}
   baseUrl: http://localhost:7007

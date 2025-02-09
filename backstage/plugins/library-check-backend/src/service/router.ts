@@ -1,16 +1,20 @@
 import { LibraryCheckStore } from '../database/index';
-import { errorHandler } from '@backstage/backend-common';
+import {createLegacyAuthAdapters, errorHandler} from '@backstage/backend-common';
 import { Config } from '@backstage/config';
 import express, { RequestHandler } from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
 import { LibraryUpdateRecord, Library } from '../types';
 import { InputError } from '@backstage/errors';
+import {AuthService, DiscoveryService, HttpAuthService} from "@backstage/backend-plugin-api";
 
 export interface RouterOptions {
   logger: Logger;
   config: Config;
   database: LibraryCheckStore;
+  discovery: DiscoveryService;
+  auth: AuthService;
+  httpAuth: HttpAuthService;
 }
 
 export async function createRouter(
@@ -19,6 +23,7 @@ export async function createRouter(
   const { logger, database } = options;
 
   const router = Router();
+  logger.info('Initializing Library Check Backend');
   router.use(express.json());
   router.use(
     express.urlencoded({
@@ -30,6 +35,7 @@ export async function createRouter(
     logger.info('PONG!');
     response.json({ status: 'ok' });
   });
+  logger.info('health check initialized');
 
   // TODO: Validate all body params with AJV library or similar
 

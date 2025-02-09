@@ -1,8 +1,10 @@
+// @ts-ignore
+
 import { Router } from 'express';
 import {
   DatabaseLibraryCheckStore,
   createRouter,
-} from '../../../../plugins/library-check-backend';
+} from '../../../plugins/library-check-backend';
 import {
   PluginDatabaseManager,
 } from '@backstage/backend-common';
@@ -21,9 +23,11 @@ export default async function createPlugin({
   const db = await DatabaseLibraryCheckStore.create({
     database: database,
   });
+  //@ts-ignore
   return await createRouter({
-    logger,
+    logger: logger,
     database: db,
-    config,
+    config: config,
+
   });
 }

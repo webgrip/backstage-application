@@ -7,11 +7,32 @@ import { githubOrgEntityProviderTransformsExtensionPoint } from '@backstage/plug
 import {myTeamTransformer, myUserTransformer} from "./transformers";
 // import {ragAiOptions} from "./ragAiOptions";
 import {
-    // legacyPlugin,
+    makeLegacyPlugin,
     loggerToWinstonLogger
 } from '@backstage/backend-common';
 import {catalogProcessingExtensionPoint} from "@backstage/plugin-catalog-node/alpha";
 import {LibraryCheckProcessor, LibraryCheckUpdaterProcessor} from "../../../plugins/library-check-backend";
+// import createPlugin from "./plugins/libraryCheck";
+// import database = coreServices.database;
+
+// const legacyPlugin = makeLegacyPlugin(
+//   {
+//       cache: coreServices.cache,
+//       config: coreServices.rootConfig,
+//       database: coreServices.database,
+//       discovery: coreServices.discovery,
+//       logger: coreServices.logger,
+//       permissions: coreServices.permissions,
+//       scheduler: coreServices.scheduler,
+//       reader: coreServices.urlReader,
+//       httpRouter: coreServices.httpRouter,
+//       auth: coreServices.auth,
+//       httpAuth: coreServices.httpAuth,
+//   },
+//   {
+//       logger: log => loggerToWinstonLogger(log),
+//   },
+// );
 
 const githubOrgModule = createBackendModule({
     pluginId: 'catalog',
@@ -42,13 +63,14 @@ const libraryCheckModule = createBackendModule({
                 discovery: coreServices.discovery,
                 config: coreServices.rootConfig,
             },
-            async init({ catalog, logger, scheduler, reader, discovery, config}) {
+            async init({ catalog, logger, scheduler, reader, discovery, config }) {
 
                 const defaultSchedule = {
                     initialDelay: { seconds: 15 },
                     frequency: { minutes: 10 },
                     timeout: { minutes: 15 },
                 };
+
                 scheduler.createScheduledTaskRunner(defaultSchedule);
 
                 const winstonLogger = loggerToWinstonLogger(logger); // @TODO migrate to LoggerService
@@ -138,8 +160,7 @@ backend.add(import('@backstage-community/plugin-adr-backend'));
 // devtools
 backend.add(import('@backstage/plugin-devtools-backend'));
 
-// @ts-ignore
-// backend.add(legacyPlugin('libraryCheck', import('./plugins/libraryCheck')));
+backend.add(import('../../../plugins/library-check-backend'));
 
 backend.add(libraryCheckModule);
 

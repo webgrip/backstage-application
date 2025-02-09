@@ -8,6 +8,7 @@ import {
 import { Server } from 'http';
 import { Logger } from 'winston';
 import { createRouter } from './router';
+import {coreServices} from "@backstage/backend-plugin-api";
 
 export interface ServerOptions {
   port: number;
@@ -35,9 +36,12 @@ export async function startStandaloneServer(
   logger.debug('Starting application server...');
 
   const router = await createRouter({
-    logger,
+    logger: logger,
+    config: config,
     database: db,
-    config,
+    discovery: coreServices.discovery,
+    auth: coreServices.auth,
+    httpAuth: coreServices.httpAuth,
   });
 
   let service = createServiceBuilder(module)

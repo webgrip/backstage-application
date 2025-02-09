@@ -1,5 +1,4 @@
-export * from './service/router';
-export * from './database/index';
-export * from './processors/index';
-export * from './tasks/index';
-export * from './types/index';
+export type { RouterOptions } from './service/router';
+export { createRouter } from './service/router';
+export { LibraryCheckProcessor, LibraryCheckUpdaterProcessor } from './processors';
+export { libraryCheckBackend as default } from './plugin';
