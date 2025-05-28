@@ -24,7 +24,7 @@ metadata:
     - backstage
   annotations:
     backstage.io/adr-location: docs/adr
-    github.com/project-slug: webgrip/backstage
+    github.com/project-slug: webgrip/backstage-application
     backstage.io/techdocs-ref: dir:.
     backstage.io/kubernetes-id: my-kubernetes-component
     backstage.io/code-coverage: enabled
