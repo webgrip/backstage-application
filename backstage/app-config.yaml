@@ -165,7 +165,7 @@ catalog:
         validateLocationsExist: true
 
 sentry:
-  organization: vendic
+  organization: webgrip
 
 kubernetes:
   frontend:
