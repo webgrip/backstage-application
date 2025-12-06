@@ -76,8 +76,12 @@ backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 
 backend.add(import('@backstage-community/search-backend-module-adr'));
 
-// kubernetes
+// kubernetes plugin
 backend.add(import('@backstage/plugin-kubernetes-backend'));
+
+// notifications and signals plugin
+backend.add(import('@backstage/plugin-notifications-backend'));
+backend.add(import('@backstage/plugin-signals-backend'));
 
 // ADR
 backend.add(import('@backstage-community/plugin-adr-backend'));

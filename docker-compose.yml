@@ -17,6 +17,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./backstage/app-config.yaml:/app/app-config.yaml:ro
+      - ./backstage/example-backstage-app-credentials.yaml:/app/example-backstage-app-credentials.yaml:ro
       - ./backstage/catalog:/app/catalog:ro
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -45,7 +46,7 @@ services:
     volumes:
       - ~/.config/mkcert:/root/.local/share/mkcert:ro
       - certificate-data:/certificate-data:rw
-    entrypoint: [ "/app/entrypoint.sh", "backstage.test" ]
+    entrypoint: ["/app/entrypoint.sh", "backstage.test"]
 
   backstage-postgres:
     container_name: backstage-postgres
@@ -55,7 +56,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./ops/postgresql/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql
     environment:
       POSTGRES_USER: backstage
       POSTGRES_PASSWORD: backstage

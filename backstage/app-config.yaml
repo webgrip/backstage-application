@@ -6,45 +6,49 @@ app:
     ga4:
       measurementId: ${GA_MEASUREMENT_ID}
       contentGrouping: pluginId
-      allowedContexts: [ 'pluginId' ]
-#      debug: true # Logs analytics event to the web console
+      allowedContexts: ["pluginId"]
 #      testMode: true # Prevents data being sent to GA
 
 organization:
   name: ${ORG_NAME}
 
 backend:
+  # auth:
+  #   dangerouslyDisableDefaultAuthPolicy: true
+
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/auth/service-to-service-auth for
   # information on the format
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
+  loglevel: info
   baseUrl: http://localhost:7007
   listen:
     port: ${APP_PORT}
     host: ${APP_HOST}
   csp:
-    connect-src: [ "'self'", 'http:', 'https:' ]
-    img-src: [
-      "'self'",
-      'data:',
-      'https://avatars.githubusercontent.com',
-      'https://img.shields.io',
-      'https://www.google-analytics.com'
-    ]
+    connect-src: ["'self'", "http:", "https:"]
+    img-src:
+      [
+        "'self'",
+        "data:",
+        "https://avatars.githubusercontent.com",
+        "https://img.shields.io",
+        "https://www.google-analytics.com",
+      ]
     script-src:
       [
         "'self'",
         "'unsafe-eval'",
-        'https://www.google-analytics.com',
-        'https://www.googletagmanager.com',
+        "https://www.google-analytics.com",
+        "https://www.googletagmanager.com",
       ]
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
     origin: ${APP_BASE_URL}
-    methods: [ GET, HEAD, PATCH, POST, PUT, DELETE ]
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
@@ -57,7 +61,7 @@ backend:
       port: ${POSTGRES_PORT}
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
-    prefix: 'example_prefix_'
+    prefix: "example_prefix_"
     # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
     # https://node-postgres.com/features/ssl
     # you can set the sslmode configuration option via the `PGSSLMODE` environment variable
@@ -78,22 +82,25 @@ integrations:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
       # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
-      token: ${GITHUB_TOKEN}
+      # token: ${GITHUB_TOKEN}
+      # OR:
+      apps:
+        - $include: example-backstage-app-credentials.yaml
 
 proxy:
   endpoints:
-    '/sentry/api':
+    "/sentry/api":
       target: https://sentry.io/api/
-      allowedMethods: [ 'GET' ]
+      allowedMethods: ["GET"]
       headers:
         Authorization: Bearer ${SENTRY_TOKEN}
-    '/newrelic/apm/api':
+    "/newrelic/apm/api":
       target: https://api.eu.newrelic.com/v2/
       headers:
         X-Api-Key: ${NEW_RELIC_REST_API_KEY}
       allowedHeaders:
         - link
-    '/newrelic/api':
+    "/newrelic/api":
       target: https://api.eu.newrelic.com/
       headers:
         X-Api-Key: ${NEW_RELIC_USER_KEY}
@@ -103,11 +110,11 @@ proxy:
 # and an external cloud storage when deploying TechDocs for production use-case.
 # https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
 techdocs:
-  builder: 'local' # Alternatives - 'external'
+  builder: "local" # Alternatives - 'external'
   generator:
-    runIn: 'docker' # Alternatives - 'local'
+    runIn: "docker" # Alternatives - 'local'
   publisher:
-    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+    type: "local" # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
   providers:
@@ -117,7 +124,8 @@ auth:
         clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
         signIn:
           resolvers:
-            - resolver: emailMatchingUserEntityProfileEmail
+            # - resolver: emailMatchingUserEntityProfileEmail
+            - resolver: usernameMatchingUserEntityName
 
 scaffolder:
 # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -127,38 +135,49 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [ Component, System, API, Resource, Domain, Location ]
+    - allow:
+        [
+          Component,
+          System,
+          API,
+          Resource,
+          Domain,
+          Location,
+          User,
+          Group,
+          Template,
+        ]
   locations:
     - type: url
       target: https://github.com/webgrip/organisation-public/blob/main/catalog/groups/c-level-group.yaml
       rules:
-        - allow: [ Group ]
+        - allow: [Group]
   providers:
     githubOrg:
       id: production
       githubUrl: https://github.com
-      orgs: [ 'webgrip' ]
+      orgs: ["webgrip"]
       schedule:
         initialDelay: { seconds: 1 }
         frequency: { hours: 1 }
         timeout: { minutes: 50 }
     github:
       mainBranches:
-        organization: 'webgrip'
-        catalogPath: '/catalog-info.yaml'
+        organization: "webgrip"
+        catalogPath: "/catalog-info.yaml"
         filters:
-          branch: 'main'
-          repository: '.*'
+          branch: "main"
+          repository: ".*"
         schedule:
           frequency: { minutes: 35 }
           timeout: { minutes: 3 }
         validateLocationsExist: true
       masterBranches:
-        organization: 'webgrip'
-        catalogPath: '/catalog-info.yaml'
+        organization: "webgrip"
+        catalogPath: "/catalog-info.yaml"
         filters:
-          branch: 'master'
-          repository: '.*'
+          branch: "master"
+          repository: ".*"
         schedule:
           frequency: { minutes: 35 }
           timeout: { minutes: 3 }
@@ -172,14 +191,14 @@ kubernetes:
     podDelete:
       enabled: true
   serviceLocatorMethod:
-    type: 'multiTenant'
+    type: "multiTenant"
   clusterLocatorMethods:
-    - type: 'config'
+    - type: "config"
       clusters:
         - url: ${K8S_CLUSTER}
           name: staging-doks-cluster
-          title: 'Staging Kubernetes Cluster'
-          authProvider: 'serviceAccount'
+          title: "Staging Kubernetes Cluster"
+          authProvider: "serviceAccount"
           caData: ${K8S_CONFIG_CA_DATA}
           serviceAccountToken: ${K8S_SERVICE_ACCOUNT_TOKEN_BACKSTAGE}
           dashboardUrl: http://127.0.0.1:8443
@@ -193,19 +212,19 @@ permission:
 devTools:
   info:
     packagePrefixes:
-      - '@backstage-community/'
-      - '@dweber019/backstage-plugin-simple-icons'
-      - '@opentelemetry/'
-      - '@roadiehq/'
-      - '@spotify/'
+      - "@backstage-community/"
+      - "@dweber019/backstage-plugin-simple-icons"
+      - "@opentelemetry/"
+      - "@roadiehq/"
+      - "@spotify/"
   externalDependencies:
     endpoints:
-      - name: 'Google'
-        type: 'fetch'
-        target: 'https://google.ca'
-      - name: 'Google Public DNS'
-        type: 'ping'
-        target: '8.8.8.8'
+      - name: "Google"
+        type: "fetch"
+        target: "https://google.ca"
+      - name: "Google Public DNS"
+        type: "ping"
+        target: "8.8.8.8"
 
 search:
   pg:
@@ -216,4 +235,4 @@ search:
       shortWord: 3 # Words of this length or less will be dropped at the start and end of a headline, unless they are query terms. The default value of three (3) eliminates common English articles.
       highlightAll: false # If true the whole document will be used as the headline, ignoring the preceding three parameters. The default is false.
       maxFragments: 0 # Maximum number of text fragments to display. The default value of zero selects a non-fragment-based headline generation method. A value greater than zero selects fragment-based headline generation (see the linked documentation above for more details).
-      fragmentDelimiter: ' ... ' # Delimiter string used to concatenate fragments. Defaults to " ... ".
+      fragmentDelimiter: " ... " # Delimiter string used to concatenate fragments. Defaults to " ... ".

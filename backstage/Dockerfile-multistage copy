@@ -1,8 +1,8 @@
 # Stage 1 - Create yarn install skeleton layer
-FROM node:22-bookworm-slim AS packages
+FROM node:20-bookworm-slim AS packages
 
 WORKDIR /app
-COPY backstage.json package.json yarn.lock ./
+COPY package.json yarn.lock ./
 COPY .yarn ./.yarn
 COPY .yarnrc.yml ./
 
@@ -14,7 +14,7 @@ COPY plugins plugins
 RUN find packages \! -name "package.json" -mindepth 2 -maxdepth 2 -exec rm -rf {} \+
 
 # Stage 2 - Install dependencies and build packages
-FROM node:22-bookworm-slim AS build
+FROM node:20-bookworm-slim AS build
 
 # Set Python interpreter for `node-gyp` to use
 ENV PYTHON=/usr/bin/python3
@@ -38,9 +38,11 @@ USER node
 WORKDIR /app
 
 COPY --from=packages --chown=node:node /app .
+COPY --from=packages --chown=node:node /app/.yarn ./.yarn
+COPY --from=packages --chown=node:node /app/.yarnrc.yml  ./
 
 RUN --mount=type=cache,target=/home/node/.cache/yarn,sharing=locked,uid=1000,gid=1000 \
-    yarn install --immutable
+    yarn install
 
 COPY --chown=node:node . .
 
@@ -52,7 +54,7 @@ RUN mkdir packages/backend/dist/skeleton packages/backend/dist/bundle \
     && tar xzf packages/backend/dist/bundle.tar.gz -C packages/backend/dist/bundle
 
 # Stage 3 - Build the actual backend image and install production dependencies
-FROM node:22-bookworm-slim as runtime
+FROM node:20-bookworm-slim as runtime
 
 # Set Python interpreter for `node-gyp` to use
 ENV PYTHON=/usr/bin/python3
@@ -93,9 +95,7 @@ WORKDIR /app
 # Copy the install dependencies from the build stage and context
 COPY --from=build --chown=node:node /app/.yarn ./.yarn
 COPY --from=build --chown=node:node /app/.yarnrc.yml  ./
-COPY --from=build --chown=node:node /app/backstage.json ./
 COPY --from=build --chown=node:node /app/yarn.lock /app/package.json /app/packages/backend/dist/skeleton/ ./
-
 # Note: The skeleton bundle only includes package.json files -- if your app has
 # plugins that define a `bin` export, the bin files need to be copied as well to
 # be linked in node_modules/.bin during yarn install.
@@ -108,9 +108,6 @@ COPY --from=build --chown=node:node /app/packages/backend/dist/bundle/ ./
 
 # Copy any other files that we need at runtime
 COPY --chown=node:node app-config*.yaml ./
-
-# This will include the examples, if you don't need these simply remove this line
-# COPY --chown=node:node examples ./examples
 
 # This switches many Node.js dependencies to production mode.
 ENV NODE_ENV=production
