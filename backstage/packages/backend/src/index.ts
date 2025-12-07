@@ -1,15 +1,13 @@
-/*
- * Hi!
- *
- * Note that this is an EXAMPLE Backstage backend. Please check the README.
- *
- * Happy hacking!
- */
-
 import { createBackend } from '@backstage/backend-defaults';
 import { createBackendModule } from '@backstage/backend-plugin-api';
+import { githubAuthenticator } from '@backstage/plugin-auth-backend-module-github-provider';
+import {
+    authProvidersExtensionPoint,
+    createOAuthProviderFactory,
+} from '@backstage/plugin-auth-node';
+import { stringifyEntityRef } from '@backstage/catalog-model';
 import { githubOrgEntityProviderTransformsExtensionPoint } from '@backstage/plugin-catalog-backend-module-github-org';
-import {myTeamTransformer, myUserTransformer} from "./transformers";
+import { myTeamTransformer, myUserTransformer } from "./transformers";
 // import {ragAiOptions} from "./ragAiOptions";
 
 const githubOrgModule = createBackendModule({
@@ -28,6 +26,38 @@ const githubOrgModule = createBackendModule({
     },
 });
 
+const customAuth = createBackendModule({
+    pluginId: 'auth',
+    moduleId: 'webgrip-custom-auth-provider',
+    register(reg) {
+        reg.registerInit({
+            deps: { providers: authProvidersExtensionPoint },
+            async init({ providers }) {
+                providers.registerProvider({
+                    providerId: 'github',
+                    factory: createOAuthProviderFactory({
+                        authenticator: githubAuthenticator,
+                        async signInResolver(info, ctx) {
+                             const username =
+                                info.result.fullProfile?.username ??
+                                info.result.fullProfile?.id;
+
+                                return ctx.signInWithCatalogUser({
+                                    entityRef: stringifyEntityRef({
+                                        kind: 'User',
+                                        namespace: 'webgrip',
+                                        name: username!,
+                                    }),
+                                });
+                        },
+                    }),
+                });
+            },
+        });
+    },
+});
+
+
 const backend = createBackend();
 
 backend.add(import('@backstage/plugin-app-backend'));
@@ -37,7 +67,7 @@ backend.add(import('@backstage/plugin-proxy-backend'));
 backend.add(import('@backstage/plugin-scaffolder-backend'));
 backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
 backend.add(
-  import('@backstage/plugin-scaffolder-backend-module-notifications'),
+    import('@backstage/plugin-scaffolder-backend-module-notifications'),
 );
 
 // techdocs plugin
@@ -48,12 +78,15 @@ backend.add(import('@backstage/plugin-auth-backend'));
 // See https://backstage.io/docs/backend-system/building-backends/migrating#the-auth-plugin
 backend.add(import('@backstage/plugin-auth-backend-module-guest-provider'));
 // See https://backstage.io/docs/auth/guest/provider
-backend.add(import('@backstage/plugin-auth-backend-module-github-provider'));
+
+// Custom auth instead of the default implementation
+// backend.add(import('@backstage/plugin-auth-backend-module-github-provider'));
+backend.add(customAuth);
 
 // catalog plugin
 backend.add(import('@backstage/plugin-catalog-backend'));
 backend.add(
-  import('@backstage/plugin-catalog-backend-module-scaffolder-entity-model'),
+    import('@backstage/plugin-catalog-backend-module-scaffolder-entity-model'),
 );
 backend.add(import('@backstage/plugin-catalog-backend-module-github'));
 backend.add(import('@backstage/plugin-catalog-backend-module-github-org'));

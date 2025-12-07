@@ -66,20 +66,3 @@ spec:
   type: database
   owner: group:webgrip/backstage
   system: backstage-system
----
-apiVersion: backstage.io/v1alpha1
-kind: User
-metadata:
-  name: Ryangr0
-  namespace: default
-  description: "Manual bridge user for Ryan"
-spec:
-  profile:
-    displayName: Ryan Grippeling
-    email: R.Grippeling@hotmail.com
-  memberOf:
-    - group:webgrip/application
-    - group:webgrip/backstage
-    - group:webgrip/c-level-group
-    - group:webgrip/grafana
-    - group:webgrip/infrastructure
