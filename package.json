@@ -1,6 +1,6 @@
 {
   "name": "backstage-application",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Internal Backstage developer portal for WebGrip",
   "private": true,
   "author": "WebGrip",
