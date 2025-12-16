@@ -1,0 +1,42 @@
+{
+  "name": "backstage-application",
+  "version": "0.1.0",
+  "description": "Internal Backstage developer portal for WebGrip",
+  "private": true,
+  "author": "WebGrip",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webgrip/backstage-application.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webgrip/backstage-application/issues"
+  },
+  "homepage": "https://github.com/webgrip/backstage-application#readme",
+  "keywords": [
+    "backstage",
+    "developer-portal",
+    "webgrip"
+  ],
+  "packageManager": "yarn@4.4.1",
+  "engines": {
+    "node": "20 || 22"
+  },
+  "scripts": {
+    "start": "yarn --cwd src start",
+    "build:backend": "yarn --cwd src build:backend",
+    "build:all": "yarn --cwd src build:all",
+    "build-image": "yarn --cwd src build-image",
+    "tsc": "yarn --cwd src tsc",
+    "tsc:full": "yarn --cwd src tsc:full",
+    "clean": "yarn --cwd src clean",
+    "test": "yarn --cwd src test",
+    "test:all": "yarn --cwd src test:all",
+    "test:e2e": "yarn --cwd src test:e2e",
+    "fix": "yarn --cwd src fix",
+    "lint": "yarn --cwd src lint",
+    "lint:all": "yarn --cwd src lint:all",
+    "prettier:check": "yarn --cwd src prettier:check",
+    "new": "yarn --cwd src new"
+  }
+}
