@@ -84,7 +84,7 @@ backend:
       port: ${POSTGRES_PORT}
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
-    prefix: "example_prefix_"
+    prefix: "backstage_"
     # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
     # https://node-postgres.com/features/ssl
     # you can set the sslmode configuration option via the `PGSSLMODE` environment variable
