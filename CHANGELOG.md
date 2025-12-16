@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/webgrip/backstage-application/compare/1.0.0...1.0.1) (2025-12-16)
+
+### Fixed
+
+* **workflows:** set context and dockerfile manually for this exception ([111ebaa](https://github.com/webgrip/backstage-application/commit/111ebaa343018283c24ffcea3f1f3163e49b173d))
+
 ## 1.0.0 (2025-12-16)
 
 ### Fixed
