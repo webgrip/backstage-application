@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/webgrip/backstage-application/compare/1.0.3...1.0.4) (2025-12-16)
+
+### Fixed
+
+* use env var for base url in the app-config.yml ([fe73265](https://github.com/webgrip/backstage-application/commit/fe73265849933020cc5bc49093cb9736185b58cb))
+
 ## [1.0.3](https://github.com/webgrip/backstage-application/compare/1.0.2...1.0.3) (2025-12-16)
 
 ### Fixed
