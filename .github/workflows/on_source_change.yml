@@ -1,0 +1,27 @@
+name: '[Workflow] On Source Change'
+
+concurrency:
+  group: push-${{ github.ref_name }}
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'ops/**'
+      - 'src/**'
+      - '.releaserc.js'
+      - '.github/workflows/on_source_change.yml'
+      - '.github/workflows/on_release_published.yml'
+
+jobs:
+  release-publish:
+    name: 'Release'
+    if: >
+      always()
+      && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release'))
+    uses: webgrip/workflows/.github/workflows/application-release-publish.yml@main
+    secrets:
+      WEBGRIP_CI_APP_ID: ${{ secrets.WEBGRIP_CI_APP_ID }}
+      WEBGRIP_CI_APP_PRIVATE_KEY: ${{ secrets.WEBGRIP_CI_APP_PRIVATE_KEY }}
+

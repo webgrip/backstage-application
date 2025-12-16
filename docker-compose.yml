@@ -2,8 +2,8 @@ services:
   backstage-application:
     container_name: backstage-application
     build:
-      context: backstage
-      dockerfile: Dockerfile-multistage
+      context: ./src/
+      dockerfile: ../ops/docker/application/Dockerfile
       target: runtime
     env_file:
       - .env
@@ -16,37 +16,13 @@ services:
       backstage-mkcert:
         condition: service_completed_successfully
     volumes:
-      - ./backstage/app-config.yaml:/app/app-config.yaml:ro
-      - ./backstage/example-backstage-app-credentials.yaml:/app/example-backstage-app-credentials.yaml:ro
-      - ./backstage/catalog:/app/catalog:ro
+      - ./src/app-config.yaml:/app/app-config.yaml:ro
+      - ./src/example-backstage-app-credentials.yaml:/app/example-backstage-app-credentials.yaml:ro
+      - ./src/catalog:/app/catalog:ro
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "3000:3000"
       - "7007:7007"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.sslheaders.headers.customrequestheaders.X-Forwarded-Proto=https"
-      - "traefik.http.routers.backstage.entrypoints=http"
-      - "traefik.http.routers.backstage.rule=Host(`backstage.test`)"
-      - "traefik.http.routers.backstage.middlewares=traefik-https-redirect"
-      - "traefik.http.routers.backstage-secure.entrypoints=https"
-      - "traefik.http.routers.backstage-secure.rule=Host(`backstage.test`)"
-      - "traefik.http.routers.backstage-secure.tls=true"
-      - "traefik.http.routers.backstage-secure.tls.domains[0].main=backstage.test"
-      - "traefik.http.routers.backstage-secure.tls.domains[0].sans=*.backstage.test"
-      - "traefik.http.routers.backstage-secure.service=backstage"
-      - "traefik.http.services.backstage.loadbalancer.server.scheme=https"
-      - "traefik.http.services.backstage.loadbalancer.server.port=7007"
-
-  backstage-mkcert:
-    container_name: backstage-mkcert
-    image: webgrip/traefik-local-development-mkcert:latest
-    pull_policy: always
-    volumes:
-      - ~/.config/mkcert:/root/.local/share/mkcert:ro
-      - certificate-data:/certificate-data:rw
-    entrypoint: ["/app/entrypoint.sh", "backstage.test"]
 
   backstage-postgres:
     container_name: backstage-postgres
@@ -83,6 +59,4 @@ networks:
     name: webgrip
 
 volumes:
-  certificate-data:
-    external: true
   postgres-data:

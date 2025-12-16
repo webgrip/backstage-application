@@ -1,12 +1,12 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
+  - package-ecosystem: "npm"
     directories:
-      - '/backstage'
-      - '/backstage/packages/app'
-      - '/backstage/packages/backend'
+      - "/src"
+      - "/src/packages/app"
+      - "/src/packages/backend"
     schedule:
-      interval: 'daily'
+      interval: "daily"
     ignore:
       - dependency-name: "@backstage/*"
       - dependency-name: "@spotify/*"
