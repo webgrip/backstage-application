@@ -46,7 +46,7 @@ backend:
       #     message: ['/^Registered scheduled task/']
       #   level: warn
 
-  baseUrl: http://localhost:7007
+  baseUrl: ${APP_BASE_URL}
   listen:
     port: ${APP_PORT}
     host: ${APP_HOST}
