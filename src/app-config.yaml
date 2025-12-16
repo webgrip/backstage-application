@@ -108,7 +108,11 @@ integrations:
       # token: ${GITHUB_TOKEN}
       # OR:
       apps:
-        - $include: example-backstage-app-credentials.yaml
+        - appId: ${GITHUB_APP_ID}
+          clientId: ${GITHUB_APP_CLIENT_ID}
+          clientSecret: ${GITHUB_APP_CLIENT_SECRET}
+          webhookSecret: ${GITHUB_APP_WEBHOOK_SECRET}
+          privateKey: ${GITHUB_APP_PRIVATE_KEY}
 
 proxy:
   endpoints:
@@ -150,7 +154,7 @@ auth:
         #     - resolver: emailMatchingUserEntityProfileEmail
         # - resolver: usernameMatchingUserEntityName
 
-scaffolder:
+#scaffolder:
 # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:

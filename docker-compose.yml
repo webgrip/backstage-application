@@ -17,7 +17,6 @@ services:
         condition: service_healthy
     volumes:
       - ./src/app-config.yaml:/app/app-config.yaml:ro
-      - ./src/example-backstage-app-credentials.yaml:/app/example-backstage-app-credentials.yaml:ro
       - ./src/catalog:/app/catalog:ro
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -39,6 +38,11 @@ services:
       POSTGRES_DB: backstage
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U backstage -d backstage"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 #
 #  structurizr:
 #    container_name: structurizr
