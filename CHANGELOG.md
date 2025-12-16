@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/webgrip/backstage-application/compare/1.0.2...1.0.3) (2025-12-16)
+
+### Fixed
+
+* fixed DB prefix and .env.example ([da3af5f](https://github.com/webgrip/backstage-application/commit/da3af5fc9b2757c60828f52bf68f3ca75ba2a429))
+
 ## [1.0.2](https://github.com/webgrip/backstage-application/compare/1.0.1...1.0.2) (2025-12-16)
 
 ### Fixed
