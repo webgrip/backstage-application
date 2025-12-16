@@ -13,8 +13,8 @@ services:
       POSTGRES_PASSWORD: backstage
       POSTGRES_DB: backstage
     depends_on:
-      backstage-mkcert:
-        condition: service_completed_successfully
+      backstage-postgres:
+        condition: service_healthy
     volumes:
       - ./src/app-config.yaml:/app/app-config.yaml:ro
       - ./src/example-backstage-app-credentials.yaml:/app/example-backstage-app-credentials.yaml:ro

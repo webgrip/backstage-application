@@ -16,6 +16,8 @@ jobs:
       DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
     with:
       version: '${{ github.event.release.tag_name }}'
+      docker_context: './src/'
+      docker_file: '../ops/docker/application/Dockerfile'
 
   # deploy:
   #   name: 'Deploy'
