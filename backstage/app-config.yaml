@@ -22,7 +22,30 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  loglevel: info
+
+  logger:
+    meta:
+      env: prod
+
+    level: info
+
+    overrides:
+      # Set the log level to 'debug' for the catalog plugin logs
+      - matchers:
+          plugin: catalog
+        level: debug
+
+      # Ignore 'info' incoming HTTP requests logs from the rootHttpRouter service
+      - matchers:
+          service: rootHttpRouter
+          type: incomingRequest
+        level: warn
+
+      # Ignore logs starting with "Registered scheduled task", unless they're warnings or errors
+      # - matchers:
+      #     message: ['/^Registered scheduled task/']
+      #   level: warn
+
   baseUrl: http://localhost:7007
   listen:
     port: ${APP_PORT}
@@ -112,7 +135,7 @@ proxy:
 techdocs:
   builder: "local" # Alternatives - 'external'
   generator:
-    runIn: "docker" # Alternatives - 'local'
+    runIn: "local" # Alternatives - 'local'
   publisher:
     type: "local" # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
