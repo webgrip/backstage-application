@@ -1867,18 +1867,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage-community/plugin-github-actions@npm:^0.6.25":
-  version: 0.6.25
-  resolution: "@backstage-community/plugin-github-actions@npm:0.6.25"
+"@backstage-community/plugin-github-actions@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "@backstage-community/plugin-github-actions@npm:0.18.0"
   dependencies:
-    "@backstage/catalog-model": "npm:^1.7.0"
-    "@backstage/core-compat-api": "npm:^0.3.1"
-    "@backstage/core-components": "npm:^0.15.1"
-    "@backstage/core-plugin-api": "npm:^1.10.0"
-    "@backstage/frontend-plugin-api": "npm:^0.9.0"
-    "@backstage/integration": "npm:^1.15.1"
-    "@backstage/integration-react": "npm:^1.2.0"
-    "@backstage/plugin-catalog-react": "npm:^1.14.0"
+    "@backstage/catalog-model": "npm:^1.7.6"
+    "@backstage/core-compat-api": "npm:^0.5.4"
+    "@backstage/core-components": "npm:^0.18.3"
+    "@backstage/core-plugin-api": "npm:^1.12.0"
+    "@backstage/frontend-plugin-api": "npm:^0.13.1"
+    "@backstage/integration": "npm:^1.18.2"
+    "@backstage/integration-react": "npm:^1.2.12"
+    "@backstage/plugin-catalog-react": "npm:^1.21.3"
     "@material-ui/core": "npm:^4.12.2"
     "@material-ui/icons": "npm:^4.9.1"
     "@material-ui/lab": "npm:4.0.0-alpha.61"
@@ -1891,7 +1891,7 @@ __metadata:
     react: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
     react-router-dom: 6.0.0-beta.0 || ^6.3.0
-  checksum: 10c0/060810416770101174052c5d8864b9f5db7e93a0cdd06618527d111842c1f0e7e940303f7ab19cb3106c61202e258d89e138ec81e0ed6b3904867670f5d06ae9
+  checksum: 10c0/ce72bf1b14b613bcb286ac0f766e7af1d23798db4741cd4a69f1d0386d748d24c372a7e0f71b3a026dc46cfd4cd7cc6a991c8ec2800eb8ab82e89c89b01f4588
   languageName: node
   linkType: hard
 
@@ -3348,7 +3348,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/frontend-plugin-api@npm:^0.13.0":
+"@backstage/frontend-plugin-api@npm:^0.13.0, @backstage/frontend-plugin-api@npm:^0.13.1":
   version: 0.13.1
   resolution: "@backstage/frontend-plugin-api@npm:0.13.1"
   dependencies:
@@ -17799,7 +17799,7 @@ __metadata:
   resolution: "backend@workspace:packages/backend"
   dependencies:
     "@backstage-community/plugin-adr-backend": "npm:^0.4.27"
-    "@backstage-community/plugin-github-actions": "npm:^0.6.25"
+    "@backstage-community/plugin-github-actions": "npm:^0.18.0"
     "@backstage-community/search-backend-module-adr": "npm:^0.2.1"
     "@backstage/backend-defaults": "npm:^0.13.1"
     "@backstage/backend-plugin-api": "npm:^1.5.0"
