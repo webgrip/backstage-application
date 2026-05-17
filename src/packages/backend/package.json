@@ -53,7 +53,7 @@
     "@backstage/plugin-signals-backend": "^0.3.10",
     "@backstage/plugin-techdocs-backend": "^2.1.2",
     "@dweber019/backstage-plugin-simple-icons": "^0.0.9",
-    "@opentelemetry/auto-instrumentations-node": "^0.53.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.75.0",
     "@opentelemetry/exporter-logs-otlp-http": "^0.55.0",
     "@opentelemetry/exporter-metrics-otlp-http": "^0.55.0",
     "@opentelemetry/exporter-trace-otlp-http": "^0.55.0",
