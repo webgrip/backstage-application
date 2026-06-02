@@ -1,5 +1,5 @@
 # This is installing the pgvector extension for postgres
-FROM postgres:18.1-bookworm
+FROM postgres:18.4-bookworm
 
 RUN apt-get update && apt-get install -y \
     build-essential \
