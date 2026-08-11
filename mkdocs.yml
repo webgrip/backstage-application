@@ -1,0 +1,28 @@
+site_name: Backstage Application
+site_description: WebGrip's Backstage portal — the application behind backstage.webgrip.dev
+docs_dir: docs
+use_directory_urls: true
+theme:
+  name: material
+  language: en
+plugins:
+  # Agent affordances (homelab rfc-docs-platform-2026): /llms.txt + /llms-full.txt
+  # + per-page raw .md, grafted into the Zensical site by the deploy leg.
+  - llms-source
+  - techdocs-core
+markdown_extensions:
+  - admonition
+  - attr_list
+  - toc:
+      permalink: true
+  - tables
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: pymdownx.superfences.fence_code_format
+nav:
+  - Overview: index.md
+  - ADRs:
+      - adr/0001-using-backstage.md
+      - adr/0002-backstage-search.md
