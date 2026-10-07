@@ -35,7 +35,7 @@
     "@backstage/plugin-catalog-backend-module-unprocessed": "^0.6.6",
     "@backstage/plugin-devtools-backend": "^0.5.11",
     "@backstage/plugin-devtools-common": "^0.1.19",
-    "@backstage/plugin-kubernetes-backend": "^0.20.4",
+    "@backstage/plugin-kubernetes-backend": "^0.21.0",
     "@backstage/plugin-notifications-backend": "^0.6.0",
     "@backstage/plugin-permission-backend": "^0.7.6",
     "@backstage/plugin-permission-backend-module-allow-all-policy": "^0.2.14",
